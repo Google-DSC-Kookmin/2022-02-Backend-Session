@@ -13,7 +13,7 @@ public class HomeWorkController {
     }
 
     @RequestMapping("/homework")
-    public String homeSork() {
+    public String homeWork() {
         return gdscMember.playCoding();
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component("PC")
 public class PC implements Computer{
     @Override
-    public void coding(){
-        System.out.println("PC로 코딩하고 있어요!");
+    public String coding(){
+        return "PC로 코딩하고 있어요!";
     }
 }

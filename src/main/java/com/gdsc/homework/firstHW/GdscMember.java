@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 public class GdscMember {
     private final Computer computer;
 
-    public GdscMember(@Qualifier("LapTop") Computer computer) {
+    public GdscMember(@Qualifier("LapTop") Computer computer){
         this.computer = computer;
     }
 
-
-    public void playCoding(){
-        System.out.println("서버 파트원이 코딩을 하고 있어요!");
-        this.computer.coding();
+    public String playCoding(){
+        String result = ("서버 파트원이 코딩을 하고 있어요!");
+        String coding = this.computer.coding();
+        return result + "\n" + coding;
     }
 }

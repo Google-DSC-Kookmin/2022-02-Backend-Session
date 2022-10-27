@@ -1,7 +1,11 @@
 package com.gdsc.homework.firstHW;
 
-public class PC {
-    public void coding(){
-        System.out.println("PC로 코딩하고 있어요!");
+import org.springframework.stereotype.Component;
+
+@Component("PC")
+class PC implements Computer {
+    @Override
+    public String Coding() {
+        return "PC로 코딩하고 있어요!";
     }
 }

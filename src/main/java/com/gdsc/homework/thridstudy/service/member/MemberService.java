@@ -3,8 +3,11 @@ package com.gdsc.homework.thridstudy.service.member;
 import com.gdsc.homework.thridstudy.domain.member.Member;
 import com.gdsc.homework.thridstudy.domain.member.MemberRepository;
 import com.gdsc.homework.thridstudy.service.member.dto.request.MemberDto;
+import com.gdsc.homework.thridstudy.service.member.dto.response.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,4 +17,15 @@ public class MemberService {
         public void signUp(MemberDto dto){
             memberRepository.save(Member.newInstance(dto.getName()));
         }
+
+    public MemberResponse getMember(Long userId) {
+        Member findMember = memberRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("없는 유저 입니다."));
+        return MemberResponse.of(findMember.getId(), findMember.getName());
+    }
+
+    public MemberResponse getMemberByName(String name) {
+        Optional<Member> findMember = memberRepository.findMemberByName(name);
+        return MemberResponse.of(findMember.get().getId(), findMember.get().getName());
+    }
 }

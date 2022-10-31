@@ -6,9 +6,14 @@ spring:
     password: root
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         show_sql: true
         format_sql: false
         default_batch_fetch_size: 1000
+
+
+logging:
+  level:
+    root: debug

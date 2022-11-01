@@ -13,7 +13,3 @@ spring:
         format_sql: false
         default_batch_fetch_size: 1000
 
-
-logging:
-  level:
-    root: debug

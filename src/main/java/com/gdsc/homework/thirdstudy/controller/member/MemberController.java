@@ -4,6 +4,7 @@ import com.gdsc.homework.thirdstudy.controller.member.dto.requset.MemberRequest;
 import com.gdsc.homework.thirdstudy.service.member.MemberService;
 import com.gdsc.homework.thirdstudy.service.member.dto.response.MemberResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ public class MemberController {
         return helloData;
     }
 
-    @GetMapping("/request-param-v3")
+    @GetMapping("/request-param")
     public String requestParam(@RequestParam String username, @RequestParam int age) {
         log.info("username={}, age={}", username, age);
         return "ok";

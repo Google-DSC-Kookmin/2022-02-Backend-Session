@@ -1,4 +1,4 @@
-package com.gdsc.homework.thridstudy.service.member.dto.response;
+package com.gdsc.homework.thirdstudy.service.member.dto.response;
 
 
 import lombok.AccessLevel;

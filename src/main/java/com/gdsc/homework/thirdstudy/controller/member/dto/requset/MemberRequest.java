@@ -1,7 +1,7 @@
-package com.gdsc.homework.thridstudy.controller.member.dto.requset;
+package com.gdsc.homework.thirdstudy.controller.member.dto.requset;
 
 
-import com.gdsc.homework.thridstudy.service.member.dto.request.MemberDto;
+import com.gdsc.homework.thirdstudy.service.member.dto.request.MemberDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

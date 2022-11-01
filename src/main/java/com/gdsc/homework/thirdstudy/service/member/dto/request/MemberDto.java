@@ -1,6 +1,10 @@
-package com.gdsc.homework.thridstudy.service.member.dto.request;
+package com.gdsc.homework.thirdstudy.service.member.dto.request;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @ToString

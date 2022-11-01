@@ -1,4 +1,4 @@
-package com.gdsc.homework.thridstudy.domain.member;
+package com.gdsc.homework.thirdstudy.domain.member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

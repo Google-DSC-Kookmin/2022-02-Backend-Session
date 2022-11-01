@@ -1,8 +1,8 @@
-package com.gdsc.homework.thridstudy.controller.member;
+package com.gdsc.homework.thirdstudy.controller.member;
 
-import com.gdsc.homework.thridstudy.controller.member.dto.requset.MemberRequest;
-import com.gdsc.homework.thridstudy.service.member.dto.response.MemberResponse;
-import com.gdsc.homework.thridstudy.service.member.MemberService;
+import com.gdsc.homework.thirdstudy.controller.member.dto.requset.MemberRequest;
+import com.gdsc.homework.thirdstudy.service.member.MemberService;
+import com.gdsc.homework.thirdstudy.service.member.dto.response.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

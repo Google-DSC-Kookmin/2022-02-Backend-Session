@@ -1,9 +1,9 @@
-package com.gdsc.homework.thridstudy.service.member;
+package com.gdsc.homework.thirdstudy.service.member;
 
-import com.gdsc.homework.thridstudy.domain.member.Member;
-import com.gdsc.homework.thridstudy.domain.member.MemberRepository;
-import com.gdsc.homework.thridstudy.service.member.dto.request.MemberDto;
-import com.gdsc.homework.thridstudy.service.member.dto.response.MemberResponse;
+import com.gdsc.homework.thirdstudy.domain.member.Member;
+import com.gdsc.homework.thirdstudy.domain.member.MemberRepository;
+import com.gdsc.homework.thirdstudy.service.member.dto.request.MemberDto;
+import com.gdsc.homework.thirdstudy.service.member.dto.response.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

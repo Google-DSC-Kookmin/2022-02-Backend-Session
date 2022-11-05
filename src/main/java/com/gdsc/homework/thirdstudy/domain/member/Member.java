@@ -19,13 +19,20 @@ public class Member {
     private Long Id;
 
     @Column
+    private String userId;
+    @Column
     private String name;
 
-    private Member(final String name) {
+    @Column
+    private String description;
+
+    private Member(final String userId,final String name,final String description) {
+        this.userId = userId;
         this.name = name;
+        this.description = description;
     }
 
-    public static Member newInstance(final String name){
-        return new Member(name);
+    public static Member newInstance(final String userId,final String name,final String description){
+        return new Member(userId,name,description);
     }
 }

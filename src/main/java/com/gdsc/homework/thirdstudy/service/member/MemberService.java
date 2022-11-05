@@ -15,7 +15,7 @@ public class MemberService {
         private final MemberRepository memberRepository;
 
         public void signUp(MemberDto dto){
-            memberRepository.save(Member.newInstance(dto.getName()));
+            memberRepository.save(Member.newInstance(dto.getName(), dto.getDescription()));
         }
 
     public MemberResponse getMember(Long userId) {

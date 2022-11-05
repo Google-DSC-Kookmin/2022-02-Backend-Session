@@ -48,6 +48,7 @@ public class MemberController {
     public void saveMember(@Valid @RequestBody final MemberRequest request){
         memberService.signUp(request.toServiceDto());
     }
+
     @GetMapping("/member/{userId}")
     public MemberResponse getMember(@PathVariable Long userId){
         log.info("userId = {}",userId);
@@ -58,4 +59,10 @@ public class MemberController {
     public MemberResponse getMemberByName(@RequestParam(required = true) String name){
         return memberService.getMemberByName(name);
     }
+
+    @GetMapping("/requestbody")
+    public MemberResponse
+
+
+
 }

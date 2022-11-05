@@ -1,5 +1,6 @@
 package com.gdsc.homework.thirdstudy.controller.member;
 
+import com.gdsc.homework.thirdstudy.controller.member.dto.requset.MemberBodyRequest;
 import com.gdsc.homework.thirdstudy.controller.member.dto.requset.MemberRequest;
 import com.gdsc.homework.thirdstudy.service.member.MemberService;
 import com.gdsc.homework.thirdstudy.service.member.dto.response.MemberResponse;
@@ -7,12 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -60,8 +56,10 @@ public class MemberController {
         return memberService.getMemberByName(name);
     }
 
-    @GetMapping("/requestbody")
-    public MemberResponse
+    @PostMapping("/requestbody")
+    public void logBody(@RequestBody MemberBodyRequest memberBodyRequest){
+        log.info("request = {}", memberBodyRequest);
+    }
 
 
 

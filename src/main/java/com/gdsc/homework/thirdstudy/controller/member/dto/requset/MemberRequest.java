@@ -26,6 +26,6 @@ public class MemberRequest {
     private String description;
 
     public MemberDto toServiceDto(){
-        return MemberDto.of(name);
+        return MemberDto.of(userId,name,description);
     }
 }

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final MemberService memberService;
 

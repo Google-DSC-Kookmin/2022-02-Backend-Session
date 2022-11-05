@@ -57,8 +57,9 @@ public class MemberController {
     }
 
     @PostMapping(value = "/requestbody", consumes = "application/json")
-    public void logBody(@RequestBody MemberBodyRequest memberBodyRequest){
+    public String logBody(@RequestBody MemberBodyRequest memberBodyRequest){
         log.info("request = {}", memberBodyRequest);
+        return "ok";
     }
 
 

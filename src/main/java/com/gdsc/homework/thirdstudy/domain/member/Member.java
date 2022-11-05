@@ -21,15 +21,12 @@ public class Member {
     @Column
     private String name;
 
-    @Column
-    private String description;
 
-    private Member(final String name,final String description) {
+    private Member(final String name) {
         this.name = name;
-        this.description = description;
     }
 
-    public static Member newInstance(final String name,final String description){
-        return new Member(name,description);
+    public static Member newInstance(final String name){
+        return new Member(name);
     }
 }

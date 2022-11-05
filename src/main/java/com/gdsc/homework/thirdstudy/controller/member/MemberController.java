@@ -50,6 +50,7 @@ public class MemberController {
     }
     @GetMapping("/member/{userId}")
     public MemberResponse getMember(@PathVariable Long userId){
+        log.info("userId = {}",userId);
         return memberService.getMember(userId);
     }
 

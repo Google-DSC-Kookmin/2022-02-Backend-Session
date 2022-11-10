@@ -24,16 +24,16 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String email;
+    private String userId;
     private String description;
 
-    private Member(final String name, final String email, final String description) {
+    private Member(final String name, final String userId, final String description) {
         this.name = name;
-        this.email = email;
+        this.userId = userId;
         this.description = description;
     }
 
-    public static Member newInstance(final String name,final String email, final String description) {
-        return new Member(name, email, description);
+    public static Member newInstance(final String name,final String userId, final String description) {
+        return new Member(name, userId, description);
     }
 }

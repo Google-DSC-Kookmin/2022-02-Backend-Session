@@ -7,10 +7,10 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberServiceRequest {
     private String name;
-    private String email;
+    private String userId;
     private String description;
 
-    public static MemberServiceRequest newInstance(String name, String email, String description) {
-        return new MemberServiceRequest(name,email,description);
+    public static MemberServiceRequest newInstance(String name, String userId, String description) {
+        return new MemberServiceRequest(name,userId,description);
     }
 }

@@ -11,10 +11,10 @@ import java.lang.reflect.Member;
 public class MemberResponse {
     Long id;
     String name;
-    String email;
+    String userId;
     String description;
 
-    public static MemberResponse newInstance(Long id, String name, String email,String description) {
-        return new MemberResponse(id,name,email,description);
+    public static MemberResponse newInstance(Long id, String name, String userId,String description) {
+        return new MemberResponse(id,name,userId,description);
     }
 }

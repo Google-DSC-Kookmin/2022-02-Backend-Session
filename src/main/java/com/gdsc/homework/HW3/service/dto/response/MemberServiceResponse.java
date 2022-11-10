@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 public class MemberServiceResponse {
     Long id;
     String name;
-    String email;
+    String userId;
     String description;
 
-    public static MemberServiceResponse of(Long id, String name, String email, String description) {
-        return new MemberServiceResponse(id,name,email, description);
+    public static MemberServiceResponse of(Long id, String name, String userId, String description) {
+        return new MemberServiceResponse(id,name,userId, description);
     }
 }

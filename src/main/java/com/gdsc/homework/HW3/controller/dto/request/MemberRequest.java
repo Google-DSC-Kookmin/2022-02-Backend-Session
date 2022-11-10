@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MemberRequest {
     String name;
-    String email;
+    String userId;
     String description;
 
     public static MemberServiceRequest toServiceDto(MemberRequest memberRequest) {
-        return MemberServiceRequest.newInstance(memberRequest.name, memberRequest.email, memberRequest.description);
+        return MemberServiceRequest.newInstance(memberRequest.name, memberRequest.userId, memberRequest.description);
     }
 }

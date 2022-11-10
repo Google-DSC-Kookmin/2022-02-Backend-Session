@@ -20,15 +20,15 @@ public class MemberService {
         validateDuplicateMember(memberServiceRequest);
         Member saveMember = memberRepository.save(Member.newInstance(
                 memberServiceRequest.getName(),
-                memberServiceRequest.getEmail(),
+                memberServiceRequest.getUserId(),
                 memberServiceRequest.getDescription()
         ));
 
-        return MemberServiceResponse.of(saveMember.getId(), saveMember.getName(), saveMember.getEmail(), saveMember.getDescription());
+        return MemberServiceResponse.of(saveMember.getId(), saveMember.getName(), saveMember.getUserId(), saveMember.getDescription());
     }
 
     private void validateDuplicateMember(MemberServiceRequest memberServiceRequest) {
-        memberRepository.findMemberByEmail(memberServiceRequest.getEmail())
+        memberRepository.findMemberByUserId(memberServiceRequest.getUserId())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });

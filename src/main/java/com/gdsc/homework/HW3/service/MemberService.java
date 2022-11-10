@@ -7,6 +7,8 @@ import com.gdsc.homework.HW3.service.dto.response.MemberServiceResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 /*
@@ -27,11 +29,28 @@ public class MemberService {
         return MemberServiceResponse.of(saveMember.getId(), saveMember.getName(), saveMember.getUserId(), saveMember.getDescription());
     }
 
+    public MemberServiceResponse search(String userId) {
+        validateNoMember(userId);
+        Optional<Member> member = memberRepository.findMemberByUserId(userId);
+        return MemberServiceResponse.of(
+                        member.get().getId(),
+                        member.get().getName(),
+                        member.get().getUserId(),
+                        member.get().getDescription());
+    }
+
     private void validateDuplicateMember(MemberServiceRequest memberServiceRequest) {
         memberRepository.findMemberByUserId(memberServiceRequest.getUserId())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
+    }
+
+    private void validateNoMember(String userId) {
+        if (memberRepository.findMemberByUserId(userId).isEmpty()) {
+            throw new IllegalStateException("해당 아이디로 가입한 회원이 없습니다.");
+        }
+
     }
 
 }

@@ -17,6 +17,9 @@ public class MemberBodyRequest {
     @NotNull
     private String name;
 
+    @NotNull
+    private String description;
+
 
     public MemberDto toServiceDto(){
         return MemberDto.of(name);

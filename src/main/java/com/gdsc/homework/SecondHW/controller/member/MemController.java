@@ -6,9 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController()
+@RequestMapping("2ndHW")
 @RequiredArgsConstructor
-public class MemberController {
+public class MemController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     @GetMapping("/GDSCBackend")
     public String printGDSC(){
@@ -26,7 +27,7 @@ public class MemberController {
         return "ok";
     }
     @GetMapping("/member")
-    public String requestparam(@RequestParam String param){
+    public String param(@RequestParam String param){
         log.info("param={}", param);
         return "ok";
     }

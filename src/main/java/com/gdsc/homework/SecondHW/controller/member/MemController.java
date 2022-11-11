@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController()
 @RequestMapping("2ndHW")
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class MemController {
         return "ok";
     }
     @PostMapping(value = "/member/dto", consumes = "application/json")
-    public String requestDTO (@RequestBody MemberRequest memberRequest){
+    public String requestDTO (@Valid @RequestBody MemberRequest memberRequest){
         log.info("userId={}, name={}, description={}",memberRequest.getUserId(),memberRequest.getName(),memberRequest.getDescription());
         return "ok";
     }

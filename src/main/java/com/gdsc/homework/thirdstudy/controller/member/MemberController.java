@@ -43,16 +43,22 @@ public class MemberController {
         return "ok";
     }
 
+    @PostMapping("/log")
+    public MemberDescriptionRequest loggingDescription(@RequestBody MemberDescriptionRequest memberData) {
+        log.info("memberData = {}", memberData.toString());
+        return memberData;
+    }
+
     @GetMapping("/log/{userId}")
     public String loggingUserId(@PathVariable String userId) {
         log.info("loggingUserId userId={}", userId);
         return "ok";
     }
 
-    @PostMapping("/log")
-    public MemberDescriptionRequest loggingDescription(@RequestBody MemberDescriptionRequest memberData) {
-        log.info("memberData = {}", memberData.toString());
-        return memberData;
+    @GetMapping("/log-search")
+    public String loggingSearch(@RequestParam String search) {
+        log.info("loggingSearch search={}", search);
+        return "ok";
     }
 
     @GetMapping("/mapping/users/{userId}/orders/{orderId}")

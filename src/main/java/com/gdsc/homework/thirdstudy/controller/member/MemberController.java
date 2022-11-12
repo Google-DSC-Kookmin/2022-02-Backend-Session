@@ -35,6 +35,12 @@ public class MemberController {
         return "ok";
     }
 
+    @GetMapping("/log")
+    public String logging() {
+        log.info("GDSC Backend");
+        return "ok";
+    }
+
     @GetMapping("/mapping/users/{userId}/orders/{orderId}")
     public String mappingPath(@PathVariable String userId, @PathVariable String orderId) {
         log.info("mappingPath userId={}, orderId={}", userId, orderId);

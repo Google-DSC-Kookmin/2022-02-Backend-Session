@@ -46,13 +46,12 @@ public class MemberController {
         log.info("loggingUserId userId={}", userId);
         return "ok";
     }
-    
+
     @GetMapping("/mapping/users/{userId}/orders/{orderId}")
     public String mappingPath(@PathVariable String userId, @PathVariable String orderId) {
         log.info("mappingPath userId={}, orderId={}", userId, orderId);
         return "ok";
     }
-
 
 
     @PostMapping(value = "/member/new", consumes = "application/json")

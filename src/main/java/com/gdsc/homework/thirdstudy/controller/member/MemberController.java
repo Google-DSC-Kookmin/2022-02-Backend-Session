@@ -1,7 +1,9 @@
 package com.gdsc.homework.thirdstudy.controller.member;
 
+import com.gdsc.homework.thirdstudy.controller.member.dto.requset.MemberDescriptionRequest;
 import com.gdsc.homework.thirdstudy.controller.member.dto.requset.MemberRequest;
 import com.gdsc.homework.thirdstudy.service.member.MemberService;
+import com.gdsc.homework.thirdstudy.service.member.dto.request.MemberDescriptionDto;
 import com.gdsc.homework.thirdstudy.service.member.dto.response.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +47,12 @@ public class MemberController {
     public String loggingUserId(@PathVariable String userId) {
         log.info("loggingUserId userId={}", userId);
         return "ok";
+    }
+
+    @PostMapping("/log")
+    public MemberDescriptionRequest loggingDescription(@RequestBody MemberDescriptionRequest memberData) {
+        log.info("memberData = {}", memberData.toString());
+        return memberData;
     }
 
     @GetMapping("/mapping/users/{userId}/orders/{orderId}")

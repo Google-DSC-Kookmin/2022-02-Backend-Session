@@ -41,6 +41,12 @@ public class MemberController {
         return "ok";
     }
 
+    @GetMapping("/log/{userId}")
+    public String loggingUserId(@PathVariable String userId) {
+        log.info("loggingUserId userId={}", userId);
+        return "ok";
+    }
+    
     @GetMapping("/mapping/users/{userId}/orders/{orderId}")
     public String mappingPath(@PathVariable String userId, @PathVariable String orderId) {
         log.info("mappingPath userId={}, orderId={}", userId, orderId);

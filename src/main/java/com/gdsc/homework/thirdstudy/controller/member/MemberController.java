@@ -79,4 +79,11 @@ public class MemberController {
         log.info("logByRequest request={}", request.toString());
         return "ok";
     }
+
+    // 4. search라는 파라미터를 받아서 이를 log로 출력
+    @GetMapping("/log/search")
+    public String logBySearch(@RequestParam String search) {
+        log.info("logBySearch search={}", search);
+        return "ok";
+    }
 }

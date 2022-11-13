@@ -72,4 +72,11 @@ public class MemberController {
         log.info("logByuserId userId={}", userId);
         return "ok";
     }
+
+    // 3. DTO를 통해 userId, name, description을 request로 받고 body를 log를 이용해서 출력
+    @PostMapping("/log/request")
+    public String logByRequest(@RequestBody MemberRequest request) {
+        log.info("logByRequest request={}", request.toString());
+        return "ok";
+    }
 }

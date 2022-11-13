@@ -37,6 +37,13 @@ public class MemberController {
         return "ok";
     }
 
+    // 3. DTO를 통해 받은 request를 log로 출력하기
+    @PostMapping("/log")
+    public String logByDto(@Valid @RequestBody MemberRequest request){
+        log.info("DTO INFO / userId : {}, name : {}, description : {}",request.getUserId(),request.getName(),request.getDescription());
+        return "ok";
+    }
+
     @PostMapping("/request-body")
     public MemberRequest requestBody(@RequestBody MemberRequest helloData){
         log.info("helloDate = {}", helloData.toString());

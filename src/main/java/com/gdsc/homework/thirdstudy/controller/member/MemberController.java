@@ -23,6 +23,13 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    // 1. GDSC Backend 로그 출력
+    @GetMapping("/log")
+    public String log(){
+        log.info("GDSC Backend");
+        return "ok";
+    }
+
     @PostMapping("/request-body")
     public MemberRequest requestBody(@RequestBody MemberRequest helloData){
         log.info("helloDate = {}", helloData.toString());

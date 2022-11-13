@@ -23,10 +23,29 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/request-body")
-    public MemberRequest requestBody(@RequestBody final MemberRequest helloData){
-        log.info("helloDate = {}", helloData.toString());
-        return helloData;
+    @GetMapping("/homework2")
+    public String gdscLog() {
+        String gdscBackend = "GDSCBackend";
+        log.info("GDSC Backend = {}", gdscBackend);
+        return "ok";
+    }
+
+    @GetMapping("/homework2/users/{userId}")
+    public String getUserId(@PathVariable int userId) {
+        log.info("userId = {}", userId);
+        return "ok";
+    }
+
+    @PostMapping("/homework2/user")
+    public MemberRequest requestBody(@RequestBody final MemberRequest memberRequest){
+        log.info("request = {}", memberRequest.toString());
+        return memberRequest;
+    }
+
+    @GetMapping("/homework2/search")
+    public String searchParam(@RequestParam String search) {
+        log.info("search = {}", search);
+        return "ok";
     }
 
     @GetMapping("/request-param")

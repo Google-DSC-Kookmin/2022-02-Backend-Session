@@ -57,4 +57,12 @@ public class MemberController {
     public MemberResponse getMemberByName(@RequestParam(required = true) String name){
         return memberService.getMemberByName(name);
     }
+
+
+    // 1. log를 통해서 String인 "GDSC Backend"를 출력
+    @GetMapping("/log")
+    public String log() {
+        log.info("GDSC Backend");
+        return "ok";
+    }
 }

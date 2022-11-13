@@ -12,9 +12,11 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberDto {
+    private Long userId;
     private String name;
+    private String description;
 
-    public static MemberDto of(String name) {
-        return new MemberDto(name);
+    public static MemberDto of(Long userId, String name, String description) {
+        return new MemberDto(userId, name, description);
     }
 }

@@ -30,6 +30,15 @@ public class MemberController {
         return "ok";
     }
 
+    // 2. path variable 을 이용해 userId 로그 출력
+    @GetMapping("/log/{userId}")
+    public String logByUserId(@PathVariable String userId){
+        log.info("input userId : {}", userId );
+        return "ok";
+    }
+
+
+
     @PostMapping("/request-body")
     public MemberRequest requestBody(@RequestBody MemberRequest helloData){
         log.info("helloDate = {}", helloData.toString());
@@ -47,8 +56,6 @@ public class MemberController {
         log.info("mappingPath userId={}, orderId={}", userId, orderId);
         return "ok";
     }
-
-
 
     @PostMapping(value = "/member/new", consumes = "application/json")
 //    @RequestMapping(value = "/member/new", method = RequestMethod.POST)

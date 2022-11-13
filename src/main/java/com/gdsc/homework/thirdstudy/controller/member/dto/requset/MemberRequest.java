@@ -17,9 +17,12 @@ import javax.validation.constraints.NotNull;
 public class MemberRequest {
 
     @NotNull
+    private Long userId;
+    @NotNull
     private String name;
+    private String description;
 
     public MemberDto toServiceDto(){
-        return MemberDto.of(name);
+        return MemberDto.of(userId, name, description);
     }
 }

@@ -37,8 +37,6 @@ public class MemberController {
         return "ok";
     }
 
-
-
     @PostMapping("/request-body")
     public MemberRequest requestBody(@RequestBody MemberRequest helloData){
         log.info("helloDate = {}", helloData.toString());

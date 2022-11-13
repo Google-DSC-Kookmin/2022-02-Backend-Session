@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class GdscMember {
     private final Computer computer;
 
-    public GdscMember(@Qualifier("labtop") Computer computer) {
+    public GdscMember(@Qualifier("laptop") Computer computer) {
         this.computer = computer;
     }
 

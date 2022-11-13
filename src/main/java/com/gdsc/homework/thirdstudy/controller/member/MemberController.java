@@ -44,6 +44,13 @@ public class MemberController {
         return "ok";
     }
 
+    // 4. RequestParam을 이용해 search 키워드로 받아온 값 log에 출력하기
+    @GetMapping("/log-search")
+    public String logBySearch(@RequestParam String search) {
+        log.info("LOG BY SEARCH / search : {}", search);
+        return "ok";
+    }
+
     @PostMapping("/request-body")
     public MemberRequest requestBody(@RequestBody MemberRequest helloData){
         log.info("helloDate = {}", helloData.toString());

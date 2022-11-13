@@ -65,4 +65,11 @@ public class MemberController {
         log.info("GDSC Backend");
         return "ok";
     }
+
+    // 2. userId를 받아서 이를 log로 출력
+    @GetMapping("/log/{userId}")
+    public String logByuserId(@PathVariable String userId) {
+        log.info("logByuserId userId={}", userId);
+        return "ok";
+    }
 }

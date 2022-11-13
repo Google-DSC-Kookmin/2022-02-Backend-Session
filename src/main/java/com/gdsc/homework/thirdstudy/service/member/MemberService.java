@@ -14,18 +14,18 @@ import java.util.Optional;
 public class MemberService {
         private final MemberRepository memberRepository;
 
-        public void signUp(MemberDto dto){
+        public void signUp(final MemberDto dto){
             memberRepository.save(Member.newInstance(dto.getName()));
         }
 
-    public MemberResponse getMember(Long userId) {
-        Member findMember = memberRepository.findById(userId)
+    public MemberResponse getMember(final Long userId) {
+        final Member findMember = memberRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 유저 입니다."));
         return MemberResponse.of(findMember.getId(), findMember.getName());
     }
 
-    public MemberResponse getMemberByName(String name) {
-        Optional<Member> findMember = memberRepository.findMemberByName(name);
+    public MemberResponse getMemberByName(final String name) {
+        final Optional<Member> findMember = memberRepository.findMemberByName(name);
         return MemberResponse.of(findMember.get().getId(), findMember.get().getName());
     }
 }

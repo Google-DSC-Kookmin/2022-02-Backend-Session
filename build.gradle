@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.gdsc'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 configurations {
 	compileOnly {
@@ -21,8 +21,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.6'
-
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.0'
+	implementation group: 'org.javassist', name: 'javassist', version: '3.29.2-GA'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -1,4 +1,4 @@
-package com.gdsc.homework;
+package com.gdsc.homework.thirdstudy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

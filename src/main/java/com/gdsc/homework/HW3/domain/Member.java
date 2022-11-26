@@ -10,7 +10,7 @@ import javax.persistence.*;
 * 기본값으로 카멜케이스 이름을 언더 스코어 네이밍으로 테이블 이름을 매칭
 * @Getter: Lombok, 접근자 자동 생성
 * */
-//@Entity
+@Entity
 @Getter
 @NoArgsConstructor
 public class Member {

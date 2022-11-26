@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping(value="/postComment", consumes = "application/json")
+    @PostMapping(value="/comment", consumes = "application/json")
     public CommentResponse postComment(@RequestBody CommentRequest commentRequest) {
         CommentServiceResponse commentServiceResponse = commentService.save(CommentRequest.toServiceDto(
                 commentRequest.getArticleId(),

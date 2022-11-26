@@ -1,15 +1,13 @@
-package com.gdsc.homework.HW5.controller;
+package com.gdsc.homework.HW5.controller.user;
 
-import com.gdsc.homework.HW5.controller.dto.request.UserRequest;
-import com.gdsc.homework.HW5.controller.dto.response.UserResponse;
-import com.gdsc.homework.HW5.service.UserService;
-import com.gdsc.homework.HW5.service.dto.response.UserServiceResponse;
+import com.gdsc.homework.HW5.controller.user.dto.request.UserRequest;
+import com.gdsc.homework.HW5.controller.user.dto.response.UserResponse;
+import com.gdsc.homework.HW5.service.user.UserService;
+import com.gdsc.homework.HW5.service.user.dto.response.UserServiceResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor

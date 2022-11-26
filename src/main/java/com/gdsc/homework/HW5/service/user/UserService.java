@@ -1,9 +1,9 @@
-package com.gdsc.homework.HW5.service;
+package com.gdsc.homework.HW5.service.user;
 
 import com.gdsc.homework.HW5.domain.User;
 import com.gdsc.homework.HW5.repository.UserRepository;
-import com.gdsc.homework.HW5.service.dto.request.UserServiceRequest;
-import com.gdsc.homework.HW5.service.dto.response.UserServiceResponse;
+import com.gdsc.homework.HW5.service.user.dto.request.UserServiceRequest;
+import com.gdsc.homework.HW5.service.user.dto.response.UserServiceResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

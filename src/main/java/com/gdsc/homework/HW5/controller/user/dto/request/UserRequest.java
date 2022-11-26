@@ -1,6 +1,6 @@
-package com.gdsc.homework.HW5.controller.dto.request;
+package com.gdsc.homework.HW5.controller.user.dto.request;
 
-import com.gdsc.homework.HW5.service.dto.request.UserServiceRequest;
+import com.gdsc.homework.HW5.service.user.dto.request.UserServiceRequest;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

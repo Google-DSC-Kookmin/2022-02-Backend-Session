@@ -1,6 +1,5 @@
 package com.gdsc.homework.HW5.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,7 +24,7 @@ public class Article {
     @OneToMany(mappedBy = "article")
     private List<Comment> comments = new ArrayList<Comment>();
     @OneToMany(mappedBy = "article")
-    private List<Like> Likes = new ArrayList<Like>();
+    private List<LikeArticle> likeArticles = new ArrayList<LikeArticle>();
 
     private Article(User user, String title, String content) {
         this.user = user;

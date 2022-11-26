@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Like {
+// Like가 SQL 예약어에 있어서 회피해야함
+public class LikeArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,12 +21,12 @@ public class Like {
     @JoinColumn(name="user_id")
     private User user;
 
-    private Like(Article article, User user) {
+    private LikeArticle(Article article, User user) {
         this.article = article;
         this.user = user;
     }
 
-    public static Like newInstance(Article article, User user) {
-        return new Like(article, user);
+    public static LikeArticle newInstance(Article article, User user) {
+        return new LikeArticle(article, user);
     }
 }

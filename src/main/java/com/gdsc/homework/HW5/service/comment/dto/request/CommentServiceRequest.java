@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommentServiceRequest {
-    Long articleId;
-    Long userId;
-    String content;
+    private Long articleId;
+    private Long userId;
+    private String content;
 
     public static CommentServiceRequest newInstance(Long articleId, Long userId, String content) {
         return new CommentServiceRequest(articleId, userId, content);

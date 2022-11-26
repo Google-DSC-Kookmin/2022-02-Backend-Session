@@ -15,7 +15,7 @@ public class ArticleController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final ArticleService articleService;
 
-    @PostMapping(value = "/postArticle", consumes = "application/json")
+    @PostMapping(value = "/article", consumes = "application/json")
     public final ArticleResponse postArticle(@RequestBody ArticleRequest articleRequest) {
         logger.info("Post Article");
         ArticleServiceResponse articleServiceResponse = articleService.postArticle(

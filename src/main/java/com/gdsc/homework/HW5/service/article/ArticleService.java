@@ -1,14 +1,21 @@
 package com.gdsc.homework.HW5.service.article;
 
 import com.gdsc.homework.HW5.domain.Article;
+import com.gdsc.homework.HW5.domain.Comment;
+import com.gdsc.homework.HW5.domain.LikeArticle;
 import com.gdsc.homework.HW5.domain.User;
 import com.gdsc.homework.HW5.repository.ArticleRepository;
 import com.gdsc.homework.HW5.repository.UserRepository;
 import com.gdsc.homework.HW5.service.article.dto.request.ArticleServiceRequest;
 import com.gdsc.homework.HW5.service.article.dto.response.ArticleServiceResponse;
+import com.gdsc.homework.HW5.service.comment.dto.response.CommentServiceResponse;
+import com.gdsc.homework.HW5.service.likearticle.dto.response.LikeArticleServiceResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,6 +51,40 @@ public class ArticleService {
                 article.getTitle(),
                 article.getContent()
         );
+    }
+
+    public final List<CommentServiceResponse> findCommentsById(Long id) {
+        Optional<Article> optional = articleRepository.findById(id);
+        validatePresentArticle(optional);
+        Article article = optional.get();
+        List<Comment> comments = article.getComments();
+        List<CommentServiceResponse> commentServiceResponseList = new ArrayList<CommentServiceResponse>();
+
+        for(Comment comment:comments) {
+            commentServiceResponseList.add(CommentServiceResponse.of(
+                    comment.getId(),
+                    comment.getArticle().getId(),
+                    comment.getUser().getId(),
+                    comment.getContent()));
+        }
+
+        return commentServiceResponseList;
+    }
+
+    public final List<LikeArticleServiceResponse> findLikeById(Long id) {
+        Optional<Article> optional = articleRepository.findById(id);
+        validatePresentArticle(optional);
+        Article article = optional.get();
+
+        List<LikeArticle> likes = article.getLikeArticles();
+        List<LikeArticleServiceResponse> likeArticleServiceResponseList= new ArrayList<LikeArticleServiceResponse>();
+
+        for(LikeArticle like: likes) {
+            likeArticleServiceResponseList.add(LikeArticleServiceResponse.of(
+                    like.getId(),like.getArticle().getId(), like.getUser().getId()));
+        }
+
+        return likeArticleServiceResponseList;
     }
 
     private void validatePresentArticle(Optional<Article> optional) {

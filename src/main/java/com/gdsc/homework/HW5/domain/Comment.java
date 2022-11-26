@@ -26,4 +26,8 @@ public class Comment {
         this.user = user;
         this.content = content;
     }
+
+    public static Comment newInstance(Article article, User user, String content) {
+        return new Comment(article, user, content);
+    }
 }

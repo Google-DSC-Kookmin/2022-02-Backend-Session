@@ -1,4 +1,4 @@
-package com.gdsc.homework.HW5.repository.article.dto.request;
+package com.gdsc.homework.HW5.service.article.dto.request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

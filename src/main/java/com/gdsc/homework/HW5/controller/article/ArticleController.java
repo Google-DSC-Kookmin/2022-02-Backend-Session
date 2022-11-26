@@ -2,8 +2,8 @@ package com.gdsc.homework.HW5.controller.article;
 
 import com.gdsc.homework.HW5.controller.article.dto.request.ArticleRequest;
 import com.gdsc.homework.HW5.controller.article.dto.response.ArticleResponse;
-import com.gdsc.homework.HW5.repository.article.ArticleService;
-import com.gdsc.homework.HW5.repository.article.dto.response.ArticleServiceResponse;
+import com.gdsc.homework.HW5.service.article.ArticleService;
+import com.gdsc.homework.HW5.service.article.dto.response.ArticleServiceResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

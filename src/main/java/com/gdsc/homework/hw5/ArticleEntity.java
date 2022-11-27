@@ -28,8 +28,8 @@ public class ArticleEntity {
     private String content;
 
     @OneToMany(mappedBy = "Article")
-    List<Like> likes = new ArrayList<Like>();
+    List<LikeEntity> likes = new ArrayList<LikeEntity>();
 
     @OneToMany(mappedBy = "Comment")
-    List<Comment> comments = new ArrayList<Comment>();
+    List<CommentEntity> comments = new ArrayList<CommentEntity>();
 }

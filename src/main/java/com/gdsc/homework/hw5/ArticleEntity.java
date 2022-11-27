@@ -30,6 +30,6 @@ public class ArticleEntity {
     @OneToMany(mappedBy = "Article")
     List<LikeEntity> likes = new ArrayList<LikeEntity>();
 
-    @OneToMany(mappedBy = "Comment")
+    @OneToMany(mappedBy = "Article")
     List<CommentEntity> comments = new ArrayList<CommentEntity>();
 }

@@ -17,16 +17,16 @@ public class Comment {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
     @ManyToOne
-    @JoinColumn(name = "ARTICLE_KEY")
+    @JoinColumn(name = "ARTICLE_ID")
     private Article article;
 
     @ManyToOne
-    @JoinColumn(name = "USER_KEY")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     @Column

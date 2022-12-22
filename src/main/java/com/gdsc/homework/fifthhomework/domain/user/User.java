@@ -1,4 +1,4 @@
-package com.gdsc.homework.fifthhomework.user;
+package com.gdsc.homework.fifthhomework.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +24,16 @@ public class User {
 
     @Column
     private String password;
+
+    private User( String email, String nickname, String password) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+    }
+
+
+    public static User newInstance(final String email, final String nickname, final String password){
+        return new User(email,nickname,password);
+    }
 
 }

@@ -38,7 +38,7 @@ public class User extends BaseTimeEntity {
         this.password = password;
     }
 
-    public static User newInstanc(final String nickName, final String email, final String password ){
+    public static User newInstance(final String nickName, final String email, final String password ){
         return new User(nickName, email, password);
     }
 }

@@ -13,8 +13,7 @@ public class UserService {
     private final UserRepository userRepository;
     public void signUp(UserDTO userDTO) {
         validateDuplicateUser(userDTO);
-        User requestUser = User.newInstanc(userDTO.getNickname(), userDTO.getEmail(), userDTO.getPassword());
-        userRepository.save(requestUser);
+        userRepository.save(User.newInstance(userDTO.getNickname(), userDTO.getEmail(), userDTO.getPassword()));
     }
     private void validateDuplicateUser(UserDTO userDTO){
         userRepository.findByEmail(userDTO.getEmail())
@@ -26,6 +25,11 @@ public class UserService {
         log.error("닉네임 중복, nickname:{}",userDTO.getNickname());
             throw new IllegalArgumentException("UserNickname already exists");
         });
+    }
+    public User getUser(Long userId){
+        User foundUser = userRepository.findByUserID(userId)
+                .orElseThrow(()-> new IllegalArgumentException("없는 유저입니다."));
+        return foundUser;
     }
 
 }

@@ -1,8 +1,13 @@
 package com.gdsc.homework.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class LikeArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

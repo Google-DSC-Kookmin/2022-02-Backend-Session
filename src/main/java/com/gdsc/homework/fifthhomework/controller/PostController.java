@@ -2,6 +2,8 @@ package com.gdsc.homework.fifthhomework.controller;
 
 
 import com.gdsc.homework.fifthhomework.domain.post.Post;
+import com.gdsc.homework.fifthhomework.dto.post.response.PostsOrderByIdDescDto;
+import com.gdsc.homework.fifthhomework.dto.post.response.PostsOrderByLikesDto;
 import com.gdsc.homework.fifthhomework.service.post.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +18,12 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/")
-    public List<Post> getPosts(){
-        return postService.getPosts();
+    public List<PostsOrderByIdDescDto> getPosts(){
+        return postService.getPostsMain();
+    }
+
+    @GetMapping("/")
+    public List<PostsOrderByLikesDto> getPostsOrderByLike(){
+        return postService.getPostsOrderByLike();
     }
 }

@@ -1,11 +1,11 @@
-package com.gdsc.homework.fifthhomework.dto.user.controller;
+package com.gdsc.homework.fifthhomework.dto.user.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class SignUpDto {
+public class SignUpServiceDto {
 
     private String email;
 

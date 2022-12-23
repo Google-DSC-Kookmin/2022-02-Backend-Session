@@ -1,12 +1,15 @@
 package com.gdsc.homework.fifthhomework.domain.post;
 
 
+import com.gdsc.homework.fifthhomework.domain.like.Like;
 import com.gdsc.homework.fifthhomework.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -26,6 +29,13 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
+
+    @OneToMany(mappedBy = "post")
+    private List<Like> likes;
+
+    @Formula("(select count(*) from like where like.feed_id=id)")
+    private int likeCount;
+
 
 
     private Post(String title, String description, User user) {

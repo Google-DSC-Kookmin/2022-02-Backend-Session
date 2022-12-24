@@ -1,14 +1,13 @@
-package com.gdsc.homework.fifthhomework.dto.post.response;
-
+package com.gdsc.homework.fifthhomework.dto.post.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PostsOrderByIdDescDto {
+public class PostPostDto {
 
-    private Long id;
     private String title;
     private String description;
+    private Long userId;
 }

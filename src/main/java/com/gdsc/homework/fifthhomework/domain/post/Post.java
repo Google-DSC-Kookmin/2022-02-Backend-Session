@@ -3,6 +3,7 @@ package com.gdsc.homework.fifthhomework.domain.post;
 
 import com.gdsc.homework.fifthhomework.domain.like.Like;
 import com.gdsc.homework.fifthhomework.domain.user.User;
+import com.gdsc.homework.fifthhomework.dto.post.request.PostPostDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
@@ -46,6 +47,10 @@ public class Post {
 
     public static Post newInstance(final String title, final String description, final User user){
         return new Post(title,description,user);
+    }
+    public static void updatePost(PostPostDto postPostDto, Post post){
+        post.title = postPostDto.getTitle();
+        post.description = postPostDto.getDescription();
     }
 
 

@@ -1,16 +1,12 @@
 package com.gdsc.homework.fifthhomework.service.comment;
 
+import com.gdsc.homework.fifthhomework.dto.comment.response.CommentGetDto;
 
-import com.gdsc.homework.fifthhomework.domain.comment.CommentRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-@AllArgsConstructor
-public class CommentService {
+public interface CommentService {
 
-    private final CommentRepository commentRepository;
+    List<CommentGetDto> getComments(Long postId);
 
-    public
-
+    List<CommentGetDto> getCommentsByUser(Long userId);
 }

@@ -1,6 +1,5 @@
 package com.gdsc.homework.service.dto.request;
 
-import com.gdsc.homework.domain.Article;
 import lombok.*;
 
 @ToString

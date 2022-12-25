@@ -28,7 +28,7 @@ public class ArticleService {
 
     }
 
-    private Article getArtcle(Long articleId){
+    public Article getArtcle(Long articleId){
         Article foundArticle = articleRepository.findByArticleId(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 게시물입니다"));
         return foundArticle;

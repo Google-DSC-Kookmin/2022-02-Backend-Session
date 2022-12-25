@@ -6,9 +6,7 @@ import com.gdsc.homework.controller.dto.response.ArticleDTO;
 import com.gdsc.homework.service.ArticleService;
 import com.gdsc.homework.service.dto.response.ArticleResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

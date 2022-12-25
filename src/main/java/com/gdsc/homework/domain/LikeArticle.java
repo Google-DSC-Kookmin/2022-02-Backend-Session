@@ -20,4 +20,13 @@ public class LikeArticle {
     @JoinColumn(name="user_id")
     User user;
 
+    public LikeArticle(Article article, User user) {
+        this.article = article;
+        this.user = user;
+    }
+
+    public static LikeArticle newInstance(Article article, User user){
+        return new LikeArticle(article,user);
+    }
+
 }

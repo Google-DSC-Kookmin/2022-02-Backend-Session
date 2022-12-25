@@ -20,6 +20,8 @@ public class Article extends BaseTimeEntity{
 
     @Column(name="content")
     private String content;
+    @Column(name="like_count")
+    private int likeCount;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,6 +36,18 @@ public class Article extends BaseTimeEntity{
         this.user = user;
     }
 
+    public Article(Long articleId, String title, String content, int likeCount) {
+        this.articleId = articleId;
+        this.title = title;
+        this.content = content;
+        this.likeCount = likeCount;
+    }
+    public void like(){
+        this.likeCount += 1;
+    }
+    public void unLike(){
+        this.likeCount -= 1;
+    }
 
     public void updateTitleOrContent (String title, String content) {
         this.title = title;

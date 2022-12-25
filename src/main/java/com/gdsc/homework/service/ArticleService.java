@@ -34,4 +34,9 @@ public class ArticleService {
         return foundArticle;
 
     }
+
+    public void delete(Long articleId) {
+        Article foundArticle = getArtcle(articleId);
+        articleRepository.delete(foundArticle);
+    }
 }

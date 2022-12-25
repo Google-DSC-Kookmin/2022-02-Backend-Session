@@ -8,6 +8,7 @@ import com.gdsc.homework.service.dto.response.ArticleResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,6 +35,16 @@ public class ArticleController {
         } catch (Exception e) {
             ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
             return ResponseEntity.badRequest().body(responseDTO);
+        }
+    }
+    @DeleteMapping("/{articleId}")
+    public String delete(@PathVariable Long articleId){
+        try {
+            articleService.delete(articleId);
+            return "delete";
+        } catch (Exception e) {
+            ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+            return responseDTO.getError();
         }
     }
 }

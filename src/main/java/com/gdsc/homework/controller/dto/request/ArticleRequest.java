@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ArticleRequest {
+    private Long articleId;
     @NotNull
     private String title;
     @NotNull
@@ -19,5 +20,8 @@ public class ArticleRequest {
 
     public ArticleDTO toServiceDto(){
         return ArticleDTO.of(title, content, userId);
+    }
+    public ArticleDTO toUpdateServiceDTO(){
+        return ArticleDTO.of(articleId, title, content, userId);
     }
 }

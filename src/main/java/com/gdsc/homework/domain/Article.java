@@ -2,7 +2,6 @@ package com.gdsc.homework.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.internal.util.privilegedactions.NewInstance;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -33,6 +32,12 @@ public class Article extends BaseTimeEntity{
         this.title = title;
         this.content = content;
         this.user = user;
+    }
+
+
+    public void updateTitleOrContent (String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 
     @OneToMany(mappedBy = "article")

@@ -1,12 +1,12 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.4'
-	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+	id 'org.springframework.boot' version '2.7.5'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id 'java'
 }
 
 group = 'com.gdsc'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 configurations {
 	compileOnly {
@@ -19,16 +19,17 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.6'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'mysql:mysql-connector-java'
 	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-	//local db 설정
-	runtimeOnly 'mysql:mysql-connector-java'
 }
 
 tasks.named('test') {

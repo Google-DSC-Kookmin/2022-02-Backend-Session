@@ -1,5 +1,6 @@
 package com.gdsc.homework.domain.post;
 
+import com.gdsc.homework.domain.comment.Comment;
 import com.gdsc.homework.domain.like.PostLike;
 import com.gdsc.homework.domain.user.User;
 import lombok.AccessLevel;
@@ -26,6 +27,9 @@ public class Post {
 
     @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<PostLike> postLikes = new ArrayList<PostLike>();
+
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<Comment>();
 
     private Post(String title, String content, User auther) {
         this.title = title;

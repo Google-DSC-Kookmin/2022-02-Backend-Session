@@ -1,6 +1,5 @@
 package com.gdsc.homework.service.post.dto.request;
 
-import com.gdsc.homework.service.user.dto.request.UserServiceRequest;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

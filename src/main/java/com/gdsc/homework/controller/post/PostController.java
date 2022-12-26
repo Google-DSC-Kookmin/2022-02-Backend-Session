@@ -5,6 +5,7 @@ import com.gdsc.homework.controller.post.dto.request.PostRequest;
 import com.gdsc.homework.controller.post.dto.response.PostResponse;
 import com.gdsc.homework.jwt.JwtTokenProvider;
 import com.gdsc.homework.service.post.PostService;
+import com.gdsc.homework.service.post.dto.request.DeletePostServiceRequest;
 import com.gdsc.homework.service.post.dto.response.PostServiceResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -76,5 +77,32 @@ public class PostController {
                 ));}
         );
         return postResponses;
+    }
+
+    @GetMapping(value = "/mypost")
+    public final List<PostResponse> getMyPosts(@RequestParam(value = "order", required = false, defaultValue = "new") String order, HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        String email = jwtTokenProvider.generateTokenToEmail(token);
+        if(!order.equals("new") && !order.equals("like")) {
+            throw new IllegalArgumentException("올바른 파라미터 필요");
+        }
+        logger.info("회원의 post 불러오기");
+        List<PostResponse> postResponses = new ArrayList<PostResponse>();
+        postService.getMyPosts(order, email).forEach(
+                post -> {postResponses.add(PostResponse.newInstance(
+                        post.getId(),
+                        post.getTitle(),
+                        post.getContent()
+                ));}
+        );
+        return postResponses;
+    }
+
+    @DeleteMapping(value = "/post/{postId}")
+    public final String deletePost (@PathVariable("postId") Long postId, HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        String email = jwtTokenProvider.generateTokenToEmail(token);
+        postService.deletePost(DeletePostServiceRequest.newInstance(email, postId));
+        return "SUCCESS - POST Delete";
     }
 }

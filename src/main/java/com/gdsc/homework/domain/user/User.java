@@ -1,4 +1,4 @@
-가package com.gdsc.homework.domain.user;
+package com.gdsc.homework.domain.user;
 
 import com.gdsc.homework.domain.post.Post;
 import lombok.Getter;

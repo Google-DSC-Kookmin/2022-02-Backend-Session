@@ -2,6 +2,7 @@ package com.gdsc.homework.controller.like;
 
 import com.gdsc.homework.jwt.JwtTokenProvider;
 import com.gdsc.homework.service.like.PostLikeService;
+import com.gdsc.homework.service.like.dto.request.DeletePostLikeServiceRequest;
 import com.gdsc.homework.service.like.dto.request.PostLikeServiceRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,8 +29,12 @@ public class PostLikeController {
     }
 
     @DeleteMapping(value = "/postlike/{postLikeId}")
-    public final String unlike(@PathVariable("postLikeId") Long postLikeId) {
-        postLikeService.deleteLike(postLikeId);
+    public final String unlike(@PathVariable("postLikeId") Long postLikeId, HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        String email = jwtTokenProvider.generateTokenToEmail(token);
+        postLikeService.deleteLike(DeletePostLikeServiceRequest.newInstance(
+                email, postLikeId
+        ));
         return "SUCCESS - PostLike cancel";
     }
 }

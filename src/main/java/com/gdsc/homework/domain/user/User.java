@@ -38,4 +38,12 @@ public class User{
     public static User newInstance(String email, String nickname, String password) {
         return new User(email, nickname, password);
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }

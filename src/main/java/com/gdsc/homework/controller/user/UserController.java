@@ -1,5 +1,6 @@
 package com.gdsc.homework.controller.user;
 
+import com.gdsc.homework.controller.user.dto.request.ChangeUserInfoRequest;
 import com.gdsc.homework.controller.user.dto.request.LoginUserRequest;
 import com.gdsc.homework.controller.user.dto.request.UserRequest;
 import com.gdsc.homework.controller.user.dto.response.UserResponse;
@@ -12,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -22,8 +25,6 @@ public class UserController {
 
     @PostMapping(value = "/signUp", consumes = "application/json")
     public final Long signUp(@RequestBody UserRequest userRequest) {
-        userValidation.duplicateEmail(userRequest.getEmail());
-        userValidation.duplicateNickname(userRequest.getNickname());
         Long userId = userService.enroll(UserRequest.toServiceDto(
                 userRequest.getEmail(),
                 userRequest.getNickname(),
@@ -49,6 +50,16 @@ public class UserController {
         userValidation.presentUserEmail(loginUserRequest.getEmail());
         userValidation.isCorrectPassword(loginUserRequest.getEmail(), loginUserRequest.getPassword());
         return jwtTokenProvider.createJwt(loginUserRequest.getEmail());
+    }
+    @PatchMapping(value = "/user/change", consumes = "application/json")
+    public final String modifyNickName(@RequestBody ChangeUserInfoRequest changeUserInfoRequest, HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        String email = jwtTokenProvider.generateTokenToEmail(token);
+        userService.editInfo(ChangeUserInfoRequest.toServiceDto(
+                changeUserInfoRequest.getEmail(),
+                changeUserInfoRequest.getNickname()
+        ));
+        return "SUCCESS MODIFY NICKNAME";
     }
 }
 

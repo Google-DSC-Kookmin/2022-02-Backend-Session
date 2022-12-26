@@ -2,8 +2,10 @@ package com.gdsc.homework.service.user;
 
 import com.gdsc.homework.domain.user.User;
 import com.gdsc.homework.domain.user.UserRepository;
+import com.gdsc.homework.service.user.dto.request.UserInfoServiceRequest;
 import com.gdsc.homework.service.user.dto.request.UserServiceRequest;
 import com.gdsc.homework.service.user.dto.response.UserServiceResponse;
+import com.gdsc.homework.validAPI.UserValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final UserValidation userValidation;
 
     public final Long enroll(UserServiceRequest userServiceRequest) {
-        // validation 필요
+        userValidation.duplicateEmail(userServiceRequest.getEmail());
+        userValidation.duplicateNickname(userServiceRequest.getNickname());
         User saveUser = userRepository.save(User.newInstance(
                 userServiceRequest.getEmail(),
                 userServiceRequest.getNickname(),
@@ -23,6 +27,16 @@ public class UserService {
         ));
 
         return saveUser.getId();
+    }
+
+    public final void editInfo(UserInfoServiceRequest userInfoServiceRequest) {
+        userValidation.duplicateEmail(userInfoServiceRequest.getEmail());
+        userValidation.duplicateNickname(userInfoServiceRequest.getNickname());
+        User saveUser = userRepository.findByEmail(userInfoServiceRequest.getEmail()).get();
+        saveUser.setEmail(userInfoServiceRequest.getEmail());
+        saveUser.setNickname(userInfoServiceRequest.getNickname());
+        userRepository.save(saveUser);
+
     }
 
     public final UserServiceResponse findById(Long id) {

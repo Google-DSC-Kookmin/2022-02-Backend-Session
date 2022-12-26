@@ -24,4 +24,14 @@ public class Comment {
     @JoinColumn(name="article_id")
     Article article;
 
+    public Comment(String content, User user, Article article) {
+        this.content = content;
+        this.user = user;
+        this.article = article;
+    }
+
+    public static Comment newInstance(String content, User user, Article article){
+        return new Comment(content, user, article);
+    }
+
 }

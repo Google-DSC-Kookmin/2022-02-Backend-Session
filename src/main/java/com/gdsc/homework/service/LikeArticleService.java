@@ -21,7 +21,6 @@ public class LikeArticleService {
     private final ArticleService articleService;
 
     public LikeArticleResponse like(LikeArticleDTO likeArticleDTO) {
-        log.info(likeArticleDTO.getUserId().toString());
         User getUser = userService.getUser(likeArticleDTO.getUserId());
         Article getArticle = articleService.getArtcle(likeArticleDTO.getArticleId());
         if(likeArticleRepository.findByUserAndArticle(getUser, getArticle) != null){

@@ -1,9 +1,6 @@
 package com.gdsc.homework.service.dto.response;
 
-import com.gdsc.homework.domain.Article;
 import lombok.*;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @ToString
 @Getter

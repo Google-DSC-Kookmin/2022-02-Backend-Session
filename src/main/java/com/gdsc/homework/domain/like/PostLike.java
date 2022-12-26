@@ -22,4 +22,15 @@ public class PostLike {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
+
+    private PostLike(User user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
+
+    public static PostLike newInstance(User user, Post post) {
+        return new PostLike(user, post);
+    }
+
+
 }

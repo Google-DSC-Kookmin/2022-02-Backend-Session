@@ -7,10 +7,7 @@ import com.gdsc.homework.service.CommentService;
 import com.gdsc.homework.service.dto.response.CommentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/comment")
@@ -26,6 +23,16 @@ public class CommentController {
         } catch (Exception e) {
             ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
             return ResponseEntity.badRequest().body(responseDTO);
+        }
+    }
+    @DeleteMapping("/{commentId}")
+    public String delete(@PathVariable Long commentId){
+        try {
+            commentService.delete(commentId);
+            return "delete";
+        } catch (Exception e) {
+            ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+            return responseDTO.getError();
         }
     }
 

@@ -18,10 +18,19 @@ public class CommentService {
     private final UserService userService;
     private final ArticleService articleService;
     public CommentResponse save(CommentDTO commentDTO) {
-        log.warn("asdfadfads"+commentDTO.getUserId().toString());
         User getUser = userService.getUser(commentDTO.getUserId());
         Article getArticle = articleService.getArtcle(commentDTO.getArticleId());
         Comment savedCommnet =commentRepository.save(Comment.newInstance(commentDTO.getContent(), getUser, getArticle));
         return CommentResponse.of(savedCommnet.getCommentId(), savedCommnet.getUser().getUserID(), savedCommnet.getArticle().getArticleId(), savedCommnet.getContent());
+    }
+
+    public void delete(Long commentId) {
+        Comment foundComment = getComment(commentId);
+        commentRepository.delete(foundComment);
+    }
+    private Comment getComment(Long commentId){
+        Comment foundComment = commentRepository.findByCommentId(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("없는 댓글입니다"));
+        return foundComment;
     }
 }

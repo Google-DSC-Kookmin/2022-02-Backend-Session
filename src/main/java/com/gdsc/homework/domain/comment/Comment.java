@@ -25,4 +25,14 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
+
+    private Comment(String content, Post post, User user) {
+        this.content = content;
+        this.post = post;
+        this.user = user;
+    }
+
+    public static Comment newInstance(String content, Post post, User user) {
+        return new Comment(content, post, user);
+    }
 }

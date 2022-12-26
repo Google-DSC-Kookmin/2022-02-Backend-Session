@@ -3,6 +3,7 @@ package com.gdsc.homework.service;
 import com.gdsc.homework.domain.User;
 import com.gdsc.homework.repository.UserRepository;
 import com.gdsc.homework.service.dto.request.UserDTO;
+import com.gdsc.homework.service.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,11 @@ public class UserService {
         User foundUser = userRepository.findByUserID(userId)
                 .orElseThrow(()-> new IllegalArgumentException("없는 유저입니다."));
         return foundUser;
+    }
+    public UserResponse getUserDto(Long userId){
+        User foundUser = userRepository.findByUserID(userId)
+                .orElseThrow(()-> new IllegalArgumentException("없는 유저입니다."));
+        return UserResponse.of(foundUser.getUserID(),foundUser.getNickName(),foundUser.getEmail());
     }
 
 }

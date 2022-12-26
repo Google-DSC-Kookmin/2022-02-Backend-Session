@@ -12,7 +12,13 @@ public class UserResponse {
     private String email;
     private String password;
 
-    public static UserResponse of(Long id, String nickName, String email, String password){
-        return new UserResponse(id, nickName, email, password);
+    public UserResponse(Long userId, String nickName, String email) {
+        this.userId = userId;
+        this.nickName = nickName;
+        this.email = email;
+    }
+
+    public static UserResponse of(Long id, String nickName, String email){
+        return new UserResponse(id, nickName, email);
     }
 }

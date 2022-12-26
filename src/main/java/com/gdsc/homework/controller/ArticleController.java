@@ -3,8 +3,11 @@ package com.gdsc.homework.controller;
 import com.gdsc.homework.controller.dto.ResponseDTO;
 import com.gdsc.homework.controller.dto.request.ArticleRequest;
 import com.gdsc.homework.controller.dto.response.ArticleDTO;
+import com.gdsc.homework.controller.dto.response.MypageDTO;
 import com.gdsc.homework.service.ArticleService;
+import com.gdsc.homework.service.UserService;
 import com.gdsc.homework.service.dto.response.ArticleResponse;
+import com.gdsc.homework.service.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
+    private final UserService userService;
     @PostMapping("/save")
     public ResponseEntity<?> save (@RequestBody ArticleRequest articleRequest){
         try {
@@ -51,8 +55,10 @@ public class ArticleController {
     public ResponseEntity<?> findByUserId(@PathVariable Long userId){
         try {
             List<ArticleResponse> myArticles = articleService.findByUserId(userId);
-            ResponseDTO myArticlesReponseDTO = ResponseDTO.builder().error("").data(myArticles).build();
-            return ResponseEntity.ok(myArticlesReponseDTO);
+            UserResponse foundUser = userService.getUserDto(userId);
+            MypageDTO mypageDTO = MypageDTO.builder().email(foundUser.getEmail()).nickName(foundUser.getNickName()).userId(foundUser.getUserId()).articles(myArticles).build();
+//            ResponseDTO myArticlesReponseDTO = ResponseDTO.builder().error("").data(myArticles).build();
+            return ResponseEntity.ok(mypageDTO);
         } catch (Exception e) {
             ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
             return ResponseEntity.badRequest().body(responseDTO);

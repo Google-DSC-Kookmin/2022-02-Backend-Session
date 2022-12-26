@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class Post {
 
     @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<PostLike> postLikes = new ArrayList<PostLike>();
+
+    @Formula("(SELECT count(1) FROM post_like l WHERE l.post_id = id)")
+    private int totalPostLikes;
 
     @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<Comment> comments = new ArrayList<Comment>();

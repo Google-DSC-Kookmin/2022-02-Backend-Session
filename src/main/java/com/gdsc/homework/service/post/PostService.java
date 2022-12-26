@@ -9,8 +9,12 @@ import com.gdsc.homework.service.post.dto.request.PostServiceRequest;
 import com.gdsc.homework.service.post.dto.response.PostServiceResponse;
 import com.gdsc.homework.validAPI.PostValidation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +42,26 @@ public class PostService {
         post.setTitle(postServiceModifyRequest.getTitle());
         post.setContent(postServiceModifyRequest.getContent());
         postRepository.save(post);
+    }
+
+    public final List<PostServiceResponse> getAllPost(String order) {
+
+        String orderProperty = null;
+        if(order.equals("new")) {
+            orderProperty = "id";
+        } else if (order.equals("like")) {
+            orderProperty = "totalPostLikes";
+        }
+        List<Post> posts = postRepository.findAll(Sort.by(Sort.Direction.DESC,orderProperty));
+        List<PostServiceResponse> postServiceResponses = new ArrayList<PostServiceResponse>();
+        posts.forEach(post -> {postServiceResponses.add(PostServiceResponse.of(
+                post.getId(),
+                post.getTitle(),
+                post.getContent()
+            ));
+        });
+
+        return postServiceResponses;
     }
 
     public final void deletePost() {

@@ -5,7 +5,6 @@ import com.gdsc.homework.controller.post.dto.request.PostRequest;
 import com.gdsc.homework.controller.post.dto.response.PostResponse;
 import com.gdsc.homework.jwt.JwtTokenProvider;
 import com.gdsc.homework.service.post.PostService;
-import com.gdsc.homework.service.post.dto.request.PostServiceRequest;
 import com.gdsc.homework.service.post.dto.response.PostServiceResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -13,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class PostController {
     @PostMapping(value = "/post", consumes = "application/json")
     public final Long upload(@RequestBody PostRequest postRequest, HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
-        String email = generateTokenToEmail(token);
+        String email = jwtTokenProvider.generateTokenToEmail(token);
 
         return postService.uploadPost(PostRequest.toServiceDto(
                 email,
@@ -36,7 +37,7 @@ public class PostController {
     @PatchMapping(value = "/post", consumes = "application/json")
     public final String modifyPost(@RequestBody PostModifyRequest postModifyRequest, HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
-        String email = generateTokenToEmail(token);
+        String email = jwtTokenProvider.generateTokenToEmail(token);
         postService.modifyPost(PostModifyRequest.toServiceDto(
                 email,
                 postModifyRequest.getId(),
@@ -47,7 +48,9 @@ public class PostController {
     }
 
     @GetMapping(value = "/post/{id}")
-    public final PostResponse findById(@PathVariable Long id) {
+    public final PostResponse findById(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        jwtTokenProvider.validateJwt(token);
         logger.info("Get Post {}", id);
         PostServiceResponse postServiceResponse = postService.findById(id);
         return PostResponse.newInstance(
@@ -57,12 +60,21 @@ public class PostController {
         );
     }
 
-    private String generateTokenToEmail(String token) {
-        try {
-            String email = jwtTokenProvider.validateJwt(token).get("sub").toString();
-            return email;
-        } catch (Exception e) {
-            throw new IllegalArgumentException("토큰 에러");
+    @GetMapping(value = "/post-all")
+    public final List<PostResponse> getAll(@RequestParam(value = "order",required = false, defaultValue = "new") String order, HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        jwtTokenProvider.validateJwt(token);
+        if(!order.equals("new") && !order.equals("like")) {
+            throw new IllegalArgumentException("올바른 파라미터 필요");
         }
+        List<PostResponse> postResponses = new ArrayList<PostResponse>();
+        postService.getAllPost(order).forEach(
+                post -> {postResponses.add(PostResponse.newInstance(
+                        post.getId(),
+                        post.getTitle(),
+                        post.getContent()
+                ));}
+        );
+        return postResponses;
     }
 }

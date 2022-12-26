@@ -18,6 +18,12 @@ public class PostValidation {
         validateUserWithPost(post, email);
     }
 
+    public void userHasPost(String email, Long postId) {
+        presentPost(postId);
+        Optional<Post> NullablePost = postRepository.findById(postId);
+        Post post = NullablePost.get();
+        validateUserWithPost(post, email);
+    }
     private void validateUserWithPost(Post post, String email) {
         if (!post.getAuther().getEmail().equals(email)) {
             throw new IllegalArgumentException("유저가 해당 포스트를 가지고 있지 않습니다.");

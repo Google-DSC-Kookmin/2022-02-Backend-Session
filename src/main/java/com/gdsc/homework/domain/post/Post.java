@@ -24,6 +24,9 @@ public class Post {
     @JoinColumn(name = "auther_id")
     private User auther;
 
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
+    private List<PostLike> postLikes = new ArrayList<PostLike>();
+
     private Post(String title, String content, User auther) {
         this.title = title;
         this.content = content;

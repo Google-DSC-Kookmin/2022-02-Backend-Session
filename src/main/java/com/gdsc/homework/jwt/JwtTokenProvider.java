@@ -51,6 +51,15 @@ public class JwtTokenProvider {
         return claimMap;
     }
 
+    public String generateTokenToEmail(String token) {
+        try {
+            String email = validateJwt(token).get("sub").toString();
+            return email;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("토큰 에러");
+        }
+    }
+
     public static JwtTokenProvider newInstance() {
         return new JwtTokenProvider();
     }

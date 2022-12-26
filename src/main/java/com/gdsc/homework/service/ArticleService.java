@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -38,5 +41,12 @@ public class ArticleService {
     public void delete(Long articleId) {
         Article foundArticle = getArtcle(articleId);
         articleRepository.delete(foundArticle);
+    }
+
+    public List<ArticleResponse> findByUserId(Long userId) {
+        User getUser = userService.getUser(userId);
+        List<Article> myArticles = articleRepository.findByUser(getUser);
+        List<ArticleResponse> articleResponses = myArticles.stream().map(ArticleResponse::new).collect(Collectors.toList());
+        return articleResponses;
     }
 }

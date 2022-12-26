@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/article")
 @RequiredArgsConstructor
@@ -45,4 +47,17 @@ public class ArticleController {
             return responseDTO.getError();
         }
     }
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> findByUserId(@PathVariable Long userId){
+        try {
+            List<ArticleResponse> myArticles = articleService.findByUserId(userId);
+            ResponseDTO myArticlesReponseDTO = ResponseDTO.builder().error("").data(myArticles).build();
+            return ResponseEntity.ok(myArticlesReponseDTO);
+        } catch (Exception e) {
+            ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+    }
+
 }

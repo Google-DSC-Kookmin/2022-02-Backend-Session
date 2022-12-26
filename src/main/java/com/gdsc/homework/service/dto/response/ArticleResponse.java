@@ -1,5 +1,6 @@
 package com.gdsc.homework.service.dto.response;
 
+import com.gdsc.homework.domain.Article;
 import lombok.*;
 
 @ToString
@@ -11,6 +12,13 @@ public class ArticleResponse {
     private String title;
     private String content;
     private Long userId;
+
+    public ArticleResponse(Article article) {
+        this.articleId = article.getArticleId();
+        this.title = article.getTitle();
+        this.content = article.getContent();
+        this.userId = article.getUser().getUserID();
+    }
 
 
     public static ArticleResponse of(Long articleId, String title, String content, Long ussrId){

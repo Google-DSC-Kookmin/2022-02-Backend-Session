@@ -19,7 +19,7 @@ public class PostValidation {
     }
 
     private void validateUserWithPost(Post post, String email) {
-        if (post.getAuther().getEmail() != email) {
+        if (!post.getAuther().getEmail().equals(email)) {
             throw new IllegalArgumentException("유저가 해당 포스트를 가지고 있지 않습니다.");
         }
     }

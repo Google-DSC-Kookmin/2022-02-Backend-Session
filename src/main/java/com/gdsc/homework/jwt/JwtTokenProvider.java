@@ -43,10 +43,10 @@ public class JwtTokenProvider {
             claimMap = claims;
         } catch (ExpiredJwtException e) {
             logger.info("유효기간 만료 {}", e);
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("유효기간만료");
         } catch (Exception e) {
             logger.info("기타 예외 {}",e);
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("기타 토큰 에러");
         }
         return claimMap;
     }

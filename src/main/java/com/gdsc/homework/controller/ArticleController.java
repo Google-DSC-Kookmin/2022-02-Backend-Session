@@ -65,5 +65,18 @@ public class ArticleController {
         }
 
     }
+    @GetMapping("/moreLike")
+    public ResponseEntity<?> moreLike(){
+        try {
+            List<ArticleResponse> articles = articleService.moreLike();
+            ResponseDTO responseDTO = ResponseDTO.builder().error("").data(articles).build();
+            return ResponseEntity.ok(responseDTO);
+        } catch (Exception e) {
+            ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+            return ResponseEntity.badRequest().body(responseDTO);
+
+        }
+
+    }
 
 }

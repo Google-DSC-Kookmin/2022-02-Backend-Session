@@ -11,4 +11,6 @@ public interface ArticleRepository extends JpaRepository<Article,Long> {
     Optional<Article> findByArticleId(Long articleId);
     List<Article> findByUser(User user);
 
+    List<Article> findAllByOrderByLikeCountDesc();
+
 }

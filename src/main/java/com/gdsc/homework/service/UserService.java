@@ -43,4 +43,12 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("로그인 정보가 틀렸습니다"));
         return UserResponse.of(signinUser.getUserID(), signinUser.getNickName(), signinUser.getEmail());
     }
+
+    public UserResponse update(UserDTO userDTO) {
+        User getUser = getUser(userDTO.getUserId());
+        validateDuplicateUser(userDTO);
+        getUser.updateUser(userDTO.getNickname(), userDTO.getEmail());
+        User savedUser = userRepository.save(getUser);
+        return UserResponse.of(savedUser.getUserID(), savedUser.getNickName(), savedUser.getEmail());
+    }
 }

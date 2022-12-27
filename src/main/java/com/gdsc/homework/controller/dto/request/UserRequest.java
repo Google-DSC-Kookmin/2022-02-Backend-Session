@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserRequest {
+    private Long userId;
     @NotNull
     private String nickname;
     @NotNull
@@ -19,6 +20,9 @@ public class UserRequest {
 
     public UserDTO toServiceDto(){
         return UserDTO.of(nickname, email, password);
+    }
+    public UserDTO toUpdateServiceDto(){
+        return UserDTO.of(userId,nickname, email);
     }
 
 

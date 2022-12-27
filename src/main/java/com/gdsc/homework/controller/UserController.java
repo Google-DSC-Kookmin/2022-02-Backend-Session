@@ -44,4 +44,14 @@ public class UserController {
         }
 
     }
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody UserRequest userRequest){
+        try {
+            UserResponse userResponse = userService.update(userRequest.toUpdateServiceDto());
+            return ResponseEntity.ok(userResponse);
+        } catch (Exception e) {
+            ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+    }
 }

@@ -27,9 +27,11 @@ public class Article extends BaseTimeEntity{
     @JoinColumn(name = "user_id")
     User user;
 
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article",orphanRemoval = true)
     List<LikeArticle> likeArticles = new ArrayList<LikeArticle>();
 
+    @OneToMany(mappedBy = "article",orphanRemoval = true)
+    List<Comment> comments = new ArrayList<Comment>();
     public Article(String title, String content,User user) {
         this.title = title;
         this.content = content;
@@ -54,8 +56,6 @@ public class Article extends BaseTimeEntity{
         this.content = content;
     }
 
-    @OneToMany(mappedBy = "article")
-    List<Comment> comments = new ArrayList<Comment>();
     public static Article newInstance(final String title, final String content, final User user) {
         return new Article(title, content, user);
     }

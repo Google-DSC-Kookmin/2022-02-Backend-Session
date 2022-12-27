@@ -64,4 +64,10 @@ public class ArticleService {
         return articleResponses;
 
     }
+
+    public List<ArticleResponse> recent() {
+        List<Article> articles = articleRepository.findAllByOrderByCreateDateDesc();
+        List<ArticleResponse> articleResponses = articles.stream().map(ArticleResponse::new).collect(Collectors.toList());
+        return articleResponses;
+    }
 }

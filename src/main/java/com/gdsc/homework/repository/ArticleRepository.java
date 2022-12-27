@@ -12,5 +12,6 @@ public interface ArticleRepository extends JpaRepository<Article,Long> {
     List<Article> findByUser(User user);
 
     List<Article> findAllByOrderByLikeCountDesc();
+    List<Article> findAllByOrderByCreateDateDesc();
 
 }

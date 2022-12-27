@@ -55,6 +55,7 @@ public class PostServiceImpl implements PostService{
         return results;
     }
 
+    @Transactional
     @Override
     public void postPost(PostPostDto postPostDto) {
         User byId = userRepository.findById(postPostDto.getUserId())
@@ -63,6 +64,7 @@ public class PostServiceImpl implements PostService{
         postRepository.save(post);
     }
 
+    @Transactional
     @Override
     public void postUpdate(PostPostDto postPostDto,Long postId) {
         Post byId = postRepository.findById(postId)
@@ -70,6 +72,7 @@ public class PostServiceImpl implements PostService{
         Post.updatePost(postPostDto,byId);
     }
 
+    @Transactional
     @Override
     public void postDelete(Long postId) {
         Post byId = postRepository.findById(postId)

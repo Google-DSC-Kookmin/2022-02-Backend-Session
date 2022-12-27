@@ -16,17 +16,17 @@ public class UserController {
 
     private final UserService userService;
 
+    // 회원가입
     @PostMapping("/user/signup")
     public String signUp(@RequestBody SignUpDto signUpDto){
         userService.SignUp(signUpDto);
         return "ok";
     }
 
+    // 로그인 - 세션 발급 관련해서 어려움을 겪음
     @PostMapping("/user/signin")
     public void signIn(@RequestBody SignInDto signInDto, HttpServletResponse httpServletResponse){
-
         userService.SignIn(signInDto,httpServletResponse);
-
     }
 
 

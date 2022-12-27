@@ -5,6 +5,7 @@ import com.gdsc.homework.fifthhomework.domain.user.UserRepository;
 import com.gdsc.homework.fifthhomework.dto.user.request.SignInDto;
 import com.gdsc.homework.fifthhomework.dto.user.request.SignUpDto;
 import com.gdsc.homework.fifthhomework.session.SessionManager;
+import com.gdsc.homework.fifthhomework.validator.Validator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,16 +22,15 @@ public class UserServiceImpl implements UserService{
     private final SessionManager sessionManager;
 
 
+    // 벨리데이터는 컴포넌트를 썼는데 컴포넌트 스캔이 자동으로 되는가?
+    private final Validator validator;
+
+    //회원가입
     @Transactional
     @Override
     public void SignUp(SignUpDto signUpDto) {
 
-        // validation 구간
-        Optional<User> findUser = userRepository.findByEmail(signUpDto.getEmail());
-        if(findUser.isPresent()){
-            throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
-        }
-
+        validator.validateSignUp(signUpDto);
 
         // user 객체 생성
         User newUser = User.newInstance(signUpDto.getEmail(),
@@ -40,20 +40,11 @@ public class UserServiceImpl implements UserService{
         // 레포지토리에 등록
         userRepository.save(newUser);
     }
-
+    // 로그인
     @Transactional
     @Override
     public void SignIn(SignInDto signInDto, HttpServletResponse httpServletResponse) {
-        Optional<User> byEmail = userRepository.findByEmail(signInDto.getEmail());
-        if(byEmail.isEmpty()){
-            throw new IllegalArgumentException("회원가입을 해주세요");
-        }
-        Optional<User> byPassword = userRepository.findByPassword(signInDto.getPassword());
-        if(byPassword.isEmpty()){
-            throw new IllegalArgumentException("회원가입을 해주세요");
-        }
+        validator.validateSignIn(signInDto);
         sessionManager.createSession(signInDto.getEmail(),httpServletResponse);
-
-
     }
 }

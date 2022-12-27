@@ -38,4 +38,9 @@ public class UserService {
         return UserResponse.of(foundUser.getUserID(),foundUser.getNickName(),foundUser.getEmail());
     }
 
+    public UserResponse signin(UserDTO userDTO) {
+        User signinUser = userRepository.findByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword())
+                .orElseThrow(() -> new IllegalArgumentException("로그인 정보가 틀렸습니다"));
+        return UserResponse.of(signinUser.getUserID(), signinUser.getNickName(), signinUser.getEmail());
+    }
 }

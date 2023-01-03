@@ -1,6 +1,6 @@
-package com.gdsc.homework.repository;
+package com.gdsc.homework.domain.user;
 
-import com.gdsc.homework.domain.User;
+import com.gdsc.homework.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

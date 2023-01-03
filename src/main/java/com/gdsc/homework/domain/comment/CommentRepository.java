@@ -1,6 +1,6 @@
-package com.gdsc.homework.repository;
+package com.gdsc.homework.domain.comment;
 
-import com.gdsc.homework.domain.Comment;
+import com.gdsc.homework.domain.comment.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

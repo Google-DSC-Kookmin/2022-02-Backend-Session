@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/like")
 @RequiredArgsConstructor
 public class LikeArticleController {
     private final LikeArticleService likeArticleService;
     @PostMapping()
-    public ResponseEntity<?> like(@RequestBody LikeArticleReqeust likeArticleReqeust){
+    public ResponseEntity<?> like(@Valid @RequestBody LikeArticleReqeust likeArticleReqeust){
         try {
             LikeArticleResponse getLikeArticle = likeArticleService.like(likeArticleReqeust.toServiceDto());
             LikeArticleDTO responseDTO = LikeArticleDTO.of(getLikeArticle.getLikeArticleId(), getLikeArticle.getArticleId(), getLikeArticle.getUserId(), getLikeArticle.getLikeCount());

@@ -9,13 +9,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/comment")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody CommentRequest commentRequest){
+    public ResponseEntity<?> save(@Valid @RequestBody CommentRequest commentRequest){
         try {
             CommentResponse getComment=commentService.save(commentRequest.toServiceDto());
             CommentDTO responseDTO = CommentDTO.of(getComment.getCommentId(), getComment.getUserId(), getComment.getArticleId(), getComment.getContent());

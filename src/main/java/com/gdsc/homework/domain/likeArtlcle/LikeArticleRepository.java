@@ -1,11 +1,8 @@
-package com.gdsc.homework.repository;
+package com.gdsc.homework.domain.likeArtlcle;
 
-import com.gdsc.homework.domain.Article;
-import com.gdsc.homework.domain.LikeArticle;
-import com.gdsc.homework.domain.User;
+import com.gdsc.homework.domain.article.Article;
+import com.gdsc.homework.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
 
 public interface LikeArticleRepository extends JpaRepository<LikeArticle,Long> {
     LikeArticle findByUserAndArticle(User user, Article article);

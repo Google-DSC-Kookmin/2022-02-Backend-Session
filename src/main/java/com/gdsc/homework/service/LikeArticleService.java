@@ -1,10 +1,10 @@
 package com.gdsc.homework.service;
 
-import com.gdsc.homework.domain.Article;
-import com.gdsc.homework.domain.LikeArticle;
-import com.gdsc.homework.domain.User;
-import com.gdsc.homework.repository.ArticleRepository;
-import com.gdsc.homework.repository.LikeArticleRepository;
+import com.gdsc.homework.domain.article.Article;
+import com.gdsc.homework.domain.likeArtlcle.LikeArticle;
+import com.gdsc.homework.domain.user.User;
+import com.gdsc.homework.domain.article.ArticleRepository;
+import com.gdsc.homework.domain.likeArtlcle.LikeArticleRepository;
 import com.gdsc.homework.service.dto.request.LikeArticleDTO;
 import com.gdsc.homework.service.dto.response.LikeArticleResponse;
 import lombok.RequiredArgsConstructor;

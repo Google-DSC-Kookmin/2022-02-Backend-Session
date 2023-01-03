@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class ArticleController {
     private final ArticleService articleService;
     private final UserService userService;
     @PostMapping("/save")
-    public ResponseEntity<?> save (@RequestBody ArticleRequest articleRequest){
+    public ResponseEntity<?> save (@Valid @RequestBody ArticleRequest articleRequest){
         try {
             articleService.save(articleRequest.toServiceDto());
             return ResponseEntity.ok("ok");

@@ -1,9 +1,9 @@
 package com.gdsc.homework.service;
 
-import com.gdsc.homework.domain.Article;
-import com.gdsc.homework.domain.Comment;
-import com.gdsc.homework.domain.User;
-import com.gdsc.homework.repository.CommentRepository;
+import com.gdsc.homework.domain.article.Article;
+import com.gdsc.homework.domain.comment.Comment;
+import com.gdsc.homework.domain.user.User;
+import com.gdsc.homework.domain.comment.CommentRepository;
 import com.gdsc.homework.service.dto.request.CommentDTO;
 import com.gdsc.homework.service.dto.response.CommentResponse;
 import lombok.RequiredArgsConstructor;

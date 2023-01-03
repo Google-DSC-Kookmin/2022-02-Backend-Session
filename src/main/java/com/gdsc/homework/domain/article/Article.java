@@ -1,5 +1,9 @@
-package com.gdsc.homework.domain;
+package com.gdsc.homework.domain.article;
 
+import com.gdsc.homework.domain.BaseTimeEntity;
+import com.gdsc.homework.domain.comment.Comment;
+import com.gdsc.homework.domain.likeArtlcle.LikeArticle;
+import com.gdsc.homework.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Article extends BaseTimeEntity{
+public class Article extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long articleId;
@@ -32,17 +36,10 @@ public class Article extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "article",orphanRemoval = true)
     List<Comment> comments = new ArrayList<Comment>();
-    public Article(String title, String content,User user) {
+    private Article(String title, String content,User user) {
         this.title = title;
         this.content = content;
         this.user = user;
-    }
-
-    public Article(Long articleId, String title, String content, int likeCount) {
-        this.articleId = articleId;
-        this.title = title;
-        this.content = content;
-        this.likeCount = likeCount;
     }
     public void like(){
         this.likeCount += 1;

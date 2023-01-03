@@ -1,5 +1,7 @@
-package com.gdsc.homework.domain;
+package com.gdsc.homework.domain.likeArtlcle;
 
+import com.gdsc.homework.domain.user.User;
+import com.gdsc.homework.domain.article.Article;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +22,7 @@ public class LikeArticle {
     @JoinColumn(name="user_id")
     User user;
 
-    public LikeArticle(Article article, User user) {
+    private LikeArticle(Article article, User user) {
         this.article = article;
         this.user = user;
     }

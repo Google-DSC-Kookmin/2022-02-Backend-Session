@@ -1,5 +1,7 @@
-package com.gdsc.homework.domain;
+package com.gdsc.homework.domain.comment;
 
+import com.gdsc.homework.domain.user.User;
+import com.gdsc.homework.domain.article.Article;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +26,7 @@ public class Comment {
     @JoinColumn(name="article_id")
     Article article;
 
-    public Comment(String content, User user, Article article) {
+    private Comment(String content, User user, Article article) {
         this.content = content;
         this.user = user;
         this.article = article;

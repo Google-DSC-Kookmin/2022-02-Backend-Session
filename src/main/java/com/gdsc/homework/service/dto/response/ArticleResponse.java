@@ -1,6 +1,6 @@
 package com.gdsc.homework.service.dto.response;
 
-import com.gdsc.homework.domain.Article;
+import com.gdsc.homework.domain.article.Article;
 import lombok.*;
 
 import java.time.LocalDateTime;

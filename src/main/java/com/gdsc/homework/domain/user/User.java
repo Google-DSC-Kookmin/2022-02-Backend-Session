@@ -1,5 +1,9 @@
-package com.gdsc.homework.domain;
+package com.gdsc.homework.domain.user;
 
+import com.gdsc.homework.domain.BaseTimeEntity;
+import com.gdsc.homework.domain.article.Article;
+import com.gdsc.homework.domain.comment.Comment;
+import com.gdsc.homework.domain.likeArtlcle.LikeArticle;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,7 +36,7 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user")
     List<Comment> comments = new ArrayList<Comment>();
 
-    public User(String nickName, String email, String password) {
+    private User(String nickName, String email, String password) {
         this.nickName = nickName;
         this.email = email;
         this.password = password;

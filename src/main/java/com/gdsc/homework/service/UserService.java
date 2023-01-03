@@ -1,7 +1,7 @@
 package com.gdsc.homework.service;
 
-import com.gdsc.homework.domain.User;
-import com.gdsc.homework.repository.UserRepository;
+import com.gdsc.homework.domain.user.User;
+import com.gdsc.homework.domain.user.UserRepository;
 import com.gdsc.homework.service.dto.request.UserDTO;
 import com.gdsc.homework.service.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;

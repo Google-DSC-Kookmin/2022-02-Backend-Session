@@ -23,16 +23,23 @@ public class LikeArticleService {
     public LikeArticleResponse like(LikeArticleDTO likeArticleDTO) {
         Users getUsers = userService.getUser(likeArticleDTO.getUserId());
         Articles getArticles = articleService.getArtcle(likeArticleDTO.getArticleId());
-        if(likeArticleRepository.findByUsersAndArticles(getUsers, getArticles) != null){
-            Likes getLikes = likeArticleRepository.findByUsersAndArticles(getUsers, getArticles);
-            log.info("좋아요 취소");
-            getArticles.unLike();
-            articleRepository.save(getArticles);
-            likeArticleRepository.delete(getLikes);
-            return LikeArticleResponse.of(getLikes.getLikeID(), getArticles.getArticleId(), getUsers.getUserID(), getArticles.getLikeCount());
+        if(likeArticleRepository.existsByUsersAndArticles(getUsers,getArticles)){
+            return unlike(getUsers, getArticles);
         }
+        return like(getUsers, getArticles);
+    }
+    private LikeArticleResponse unlike(Users getUsers, Articles getArticles){
+        Likes getLikes = likeArticleRepository.findByUsersAndArticles(getUsers, getArticles);
+        log.info("좋아요 취소");
+        getArticles.unLike(); //--likeCounts
+        articleRepository.save(getArticles); //좋아요 수 저장
+        likeArticleRepository.delete(getLikes);
+        return LikeArticleResponse.of(getLikes.getLikeID(), getArticles.getArticleId(), getUsers.getUserID(), getArticles.getLikeCount());
+    }
+    private LikeArticleResponse like(Users getUsers, Articles getArticles){
         Likes savedLikes = likeArticleRepository.save(Likes.newInstance(getArticles, getUsers));
-        getArticles.like();
+        log.info("좋아요");
+        getArticles.like(); //++likeCounts
         articleRepository.save(getArticles);
         return LikeArticleResponse.of(savedLikes.getLikeID(), getArticles.getArticleId(), getUsers.getUserID(), getArticles.getLikeCount());
     }

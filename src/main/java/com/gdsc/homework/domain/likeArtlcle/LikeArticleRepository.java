@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LikeArticleRepository extends JpaRepository<Likes,Long> {
     Likes findByUsersAndArticles(Users users, Articles articles);
+    Boolean existsByUsersAndArticles(Users users,Articles articles);
 }

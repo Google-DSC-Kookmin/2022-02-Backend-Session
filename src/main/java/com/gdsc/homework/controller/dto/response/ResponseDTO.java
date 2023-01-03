@@ -1,4 +1,4 @@
-package com.gdsc.homework.controller.dto;
+package com.gdsc.homework.controller.dto.response;
 
 import lombok.*;
 

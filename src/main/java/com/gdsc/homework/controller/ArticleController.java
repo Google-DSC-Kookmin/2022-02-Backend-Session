@@ -1,8 +1,7 @@
 package com.gdsc.homework.controller;
 
-import com.gdsc.homework.controller.dto.ResponseDTO;
+import com.gdsc.homework.controller.dto.response.ResponseDTO;
 import com.gdsc.homework.controller.dto.request.ArticleRequest;
-import com.gdsc.homework.controller.dto.response.ArticleDTO;
 import com.gdsc.homework.controller.dto.response.MypageDTO;
 import com.gdsc.homework.service.ArticleService;
 import com.gdsc.homework.service.UserService;
@@ -35,8 +34,7 @@ public class ArticleController {
     public ResponseEntity<?> update(@RequestBody ArticleRequest articleRequest){
         try {
             ArticleResponse updatedArticle=articleService.update(articleRequest.toUpdateServiceDTO());
-            ArticleDTO responseDTO = ArticleDTO.of(updatedArticle.getArticleId(), updatedArticle.getTitle(), updatedArticle.getContent(), updatedArticle.getUserId());
-            return ResponseEntity.ok(responseDTO);
+            return ResponseEntity.ok(updatedArticle);
         } catch (Exception e) {
             ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
             return ResponseEntity.badRequest().body(responseDTO);

@@ -1,8 +1,7 @@
 package com.gdsc.homework.controller;
 
-import com.gdsc.homework.controller.dto.ResponseDTO;
+import com.gdsc.homework.controller.dto.response.ResponseDTO;
 import com.gdsc.homework.controller.dto.request.LikeArticleReqeust;
-import com.gdsc.homework.controller.dto.response.LikeArticleDTO;
 import com.gdsc.homework.service.LikeArticleService;
 import com.gdsc.homework.service.dto.response.LikeArticleResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +22,7 @@ public class LikeArticleController {
     public ResponseEntity<?> like(@Valid @RequestBody LikeArticleReqeust likeArticleReqeust){
         try {
             LikeArticleResponse getLikeArticle = likeArticleService.like(likeArticleReqeust.toServiceDto());
-            LikeArticleDTO responseDTO = LikeArticleDTO.of(getLikeArticle.getLikeArticleId(), getLikeArticle.getArticleId(), getLikeArticle.getUserId(), getLikeArticle.getLikeCount());
-            return ResponseEntity.ok(responseDTO);
+            return ResponseEntity.ok(getLikeArticle);
         } catch (Exception e) {
             ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
             return ResponseEntity.badRequest().body(responseDTO);

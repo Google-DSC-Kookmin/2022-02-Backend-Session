@@ -1,8 +1,7 @@
 package com.gdsc.homework.controller;
 
-import com.gdsc.homework.controller.dto.ResponseDTO;
+import com.gdsc.homework.controller.dto.response.ResponseDTO;
 import com.gdsc.homework.controller.dto.request.CommentRequest;
-import com.gdsc.homework.controller.dto.response.CommentDTO;
 import com.gdsc.homework.service.CommentService;
 import com.gdsc.homework.service.dto.response.CommentResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +19,7 @@ public class CommentController {
     public ResponseEntity<?> save(@Valid @RequestBody CommentRequest commentRequest){
         try {
             CommentResponse getComment=commentService.save(commentRequest.toServiceDto());
-            CommentDTO responseDTO = CommentDTO.of(getComment.getCommentId(), getComment.getUserId(), getComment.getArticleId(), getComment.getContent());
-            return ResponseEntity.ok(responseDTO);
+            return ResponseEntity.ok(getComment);
         } catch (Exception e) {
             ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
             return ResponseEntity.badRequest().body(responseDTO);

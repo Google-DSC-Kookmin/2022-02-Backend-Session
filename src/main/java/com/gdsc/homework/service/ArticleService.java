@@ -1,7 +1,7 @@
 package com.gdsc.homework.service;
 
-import com.gdsc.homework.domain.article.Article;
-import com.gdsc.homework.domain.user.User;
+import com.gdsc.homework.domain.article.Articles;
+import com.gdsc.homework.domain.user.Users;
 import com.gdsc.homework.domain.article.ArticleRepository;
 import com.gdsc.homework.service.dto.request.ArticleDTO;
 import com.gdsc.homework.service.dto.response.ArticleResponse;
@@ -20,52 +20,52 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final UserService userService;
     public void save(ArticleDTO articleDTO) {
-        User foundUser = userService.getUser(articleDTO.getUserId());
-        articleRepository.save(Article.newInstance(articleDTO.getTitle(), articleDTO.getContent(), foundUser));
+        Users foundUsers = userService.getUser(articleDTO.getUserId());
+        articleRepository.save(Articles.newInstance(articleDTO.getTitle(), articleDTO.getContent(), foundUsers));
     }
     public ArticleResponse update(ArticleDTO articleDTO){
-        Article getAticle = getArtcle(articleDTO.getArticleId());
+        Articles getAticle = getArtcle(articleDTO.getArticleId());
         getAticle.updateTitleOrContent(articleDTO.getTitle(), articleDTO.getContent());
-        Article savedAticle = articleRepository.save(getAticle);
-        return ArticleResponse.of(savedAticle.getArticleId(), savedAticle.getTitle(), savedAticle.getContent(), savedAticle.getUser().getUserID());
+        Articles savedAticle = articleRepository.save(getAticle);
+        return ArticleResponse.of(savedAticle.getArticleId(), savedAticle.getTitle(), savedAticle.getContent(), savedAticle.getUsers().getUserID());
 
 
     }
 
-    public Article getArtcle(Long articleId){
-        Article foundArticle = articleRepository.findByArticleId(articleId)
+    public Articles getArtcle(Long articleId){
+        Articles foundArticles = articleRepository.findByArticleId(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 게시물입니다"));
-        return foundArticle;
+        return foundArticles;
 
     }
 
     public void delete(Long articleId) {
-        Article foundArticle = getArtcle(articleId);
-        articleRepository.delete(foundArticle);
+        Articles foundArticles = getArtcle(articleId);
+        articleRepository.delete(foundArticles);
     }
 
     public List<ArticleResponse> findByUserId(Long userId) {
-        User getUser = userService.getUser(userId);
-        List<Article> myArticles = articleRepository.findByUser(getUser);
+        Users getUsers = userService.getUser(userId);
+        List<Articles> myArticles = articleRepository.findByUsers(getUsers);
         List<ArticleResponse> articleResponses = myArticles.stream().map(ArticleResponse::new).collect(Collectors.toList());
         return articleResponses;
     }
 
     public List<ArticleResponse> moreLike() {
-//        List<Article> articles = articleRepository.findAllByOrderByLikeCountDesc(); // 좋아요 순으로만 정렬
-//        List<Article> arrayArticles = arrayArticles
+//        List<Articles> articles = articleRepository.findAllByOrderByLikeCountDesc(); // 좋아요 순으로만 정렬
+//        List<Articles> arrayArticles = arrayArticles
         Sort sort = Sort.by( // 좋아요 내림차순, 게시글 최신순
                 Sort.Order.desc("likeCount"),
                 Sort.Order.desc("createDate")
         );
-        List<Article> arrayLikeCountToCreateDate = articleRepository.findAll(sort);
+        List<Articles> arrayLikeCountToCreateDate = articleRepository.findAll(sort);
         List<ArticleResponse> articleResponses = arrayLikeCountToCreateDate.stream().map(ArticleResponse::new).collect(Collectors.toList());
         return articleResponses;
 
     }
 
     public List<ArticleResponse> recent() {
-        List<Article> articles = articleRepository.findAllByOrderByCreateDateDesc();
+        List<Articles> articles = articleRepository.findAllByOrderByCreateDateDesc();
         List<ArticleResponse> articleResponses = articles.stream().map(ArticleResponse::new).collect(Collectors.toList());
         return articleResponses;
     }

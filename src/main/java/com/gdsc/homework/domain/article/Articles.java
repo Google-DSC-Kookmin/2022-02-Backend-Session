@@ -1,9 +1,9 @@
 package com.gdsc.homework.domain.article;
 
 import com.gdsc.homework.domain.BaseTimeEntity;
-import com.gdsc.homework.domain.comment.Comment;
-import com.gdsc.homework.domain.likeArtlcle.LikeArticle;
-import com.gdsc.homework.domain.user.User;
+import com.gdsc.homework.domain.comment.Comments;
+import com.gdsc.homework.domain.likeArtlcle.Likes;
+import com.gdsc.homework.domain.user.Users;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,8 +13,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "articles")
 @NoArgsConstructor
-public class Article extends BaseTimeEntity {
+public class Articles extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long articleId;
@@ -29,17 +30,17 @@ public class Article extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User user;
+    Users users;
 
-    @OneToMany(mappedBy = "article",orphanRemoval = true)
-    List<LikeArticle> likeArticles = new ArrayList<LikeArticle>();
+    @OneToMany(mappedBy = "articles",orphanRemoval = true)
+    List<Likes> likes = new ArrayList<Likes>();
 
-    @OneToMany(mappedBy = "article",orphanRemoval = true)
-    List<Comment> comments = new ArrayList<Comment>();
-    private Article(String title, String content,User user) {
+    @OneToMany(mappedBy = "articles",orphanRemoval = true)
+    List<Comments> comments = new ArrayList<Comments>();
+    private Articles(String title, String content, Users users) {
         this.title = title;
         this.content = content;
-        this.user = user;
+        this.users = users;
     }
     public void like(){
         this.likeCount += 1;
@@ -53,8 +54,8 @@ public class Article extends BaseTimeEntity {
         this.content = content;
     }
 
-    public static Article newInstance(final String title, final String content, final User user) {
-        return new Article(title, content, user);
+    public static Articles newInstance(final String title, final String content, final Users users) {
+        return new Articles(title, content, users);
     }
 
 

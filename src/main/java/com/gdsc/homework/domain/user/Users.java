@@ -1,9 +1,9 @@
 package com.gdsc.homework.domain.user;
 
 import com.gdsc.homework.domain.BaseTimeEntity;
-import com.gdsc.homework.domain.article.Article;
-import com.gdsc.homework.domain.comment.Comment;
-import com.gdsc.homework.domain.likeArtlcle.LikeArticle;
+import com.gdsc.homework.domain.article.Articles;
+import com.gdsc.homework.domain.comment.Comments;
+import com.gdsc.homework.domain.likeArtlcle.Likes;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +14,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class User extends BaseTimeEntity {
+@Table(name = "users")
+public class Users extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userID;
@@ -27,16 +28,16 @@ public class User extends BaseTimeEntity {
     @Column(name="password")
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    List<Article> articles = new ArrayList<Article>();
+    @OneToMany(mappedBy = "users")
+    List<Articles> articles = new ArrayList<Articles>();
 
-    @OneToMany(mappedBy = "user")
-    List<LikeArticle> likeArticles = new ArrayList<LikeArticle>();
+    @OneToMany(mappedBy = "users")
+    List<Likes> likes = new ArrayList<Likes>();
 
-    @OneToMany(mappedBy = "user")
-    List<Comment> comments = new ArrayList<Comment>();
+    @OneToMany(mappedBy = "users")
+    List<Comments> comments = new ArrayList<Comments>();
 
-    private User(String nickName, String email, String password) {
+    private Users(String nickName, String email, String password) {
         this.nickName = nickName;
         this.email = email;
         this.password = password;
@@ -46,7 +47,7 @@ public class User extends BaseTimeEntity {
         this.email = email;
     }
 
-    public static User newInstance(final String nickName, final String email, final String password ){
-        return new User(nickName, email, password);
+    public static Users newInstance(final String nickName, final String email, final String password ){
+        return new Users(nickName, email, password);
     }
 }

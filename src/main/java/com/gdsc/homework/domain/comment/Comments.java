@@ -1,7 +1,7 @@
 package com.gdsc.homework.domain.comment;
 
-import com.gdsc.homework.domain.user.User;
-import com.gdsc.homework.domain.article.Article;
+import com.gdsc.homework.domain.article.Articles;
+import com.gdsc.homework.domain.user.Users;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Comment {
+@Table(name = "comments")
+public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
@@ -20,20 +21,20 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User user;
+    Users users;
 
     @ManyToOne
     @JoinColumn(name="article_id")
-    Article article;
+    Articles articles;
 
-    private Comment(String content, User user, Article article) {
+    private Comments(String content, Users users, Articles articles) {
         this.content = content;
-        this.user = user;
-        this.article = article;
+        this.users = users;
+        this.articles = articles;
     }
 
-    public static Comment newInstance(String content, User user, Article article){
-        return new Comment(content, user, article);
+    public static Comments newInstance(String content, Users users, Articles articles){
+        return new Comments(content, users, articles);
     }
 
 }

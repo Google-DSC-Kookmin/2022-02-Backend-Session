@@ -1,6 +1,6 @@
 package com.gdsc.homework.service;
 
-import com.gdsc.homework.domain.user.User;
+import com.gdsc.homework.domain.user.Users;
 import com.gdsc.homework.domain.user.UserRepository;
 import com.gdsc.homework.service.dto.request.UserDTO;
 import com.gdsc.homework.service.dto.response.UserResponse;
@@ -14,7 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
     public void signUp(UserDTO userDTO) {
         validateDuplicateUser(userDTO);
-        userRepository.save(User.newInstance(userDTO.getNickname(), userDTO.getEmail(), userDTO.getPassword()));
+        userRepository.save(Users.newInstance(userDTO.getNickname(), userDTO.getEmail(), userDTO.getPassword()));
     }
     private void validateDuplicateUser(UserDTO userDTO){
         userRepository.findByEmail(userDTO.getEmail())
@@ -27,28 +27,28 @@ public class UserService {
             throw new IllegalArgumentException("UserNickname already exists");
         });
     }
-    public User getUser(Long userId){
-        User foundUser = userRepository.findByUserID(userId)
+    public Users getUser(Long userId){
+        Users foundUsers = userRepository.findByUserID(userId)
                 .orElseThrow(()-> new IllegalArgumentException("없는 유저입니다."));
-        return foundUser;
+        return foundUsers;
     }
     public UserResponse getUserDto(Long userId){
-        User foundUser = userRepository.findByUserID(userId)
+        Users foundUsers = userRepository.findByUserID(userId)
                 .orElseThrow(()-> new IllegalArgumentException("없는 유저입니다."));
-        return UserResponse.of(foundUser.getUserID(),foundUser.getNickName(),foundUser.getEmail());
+        return UserResponse.of(foundUsers.getUserID(), foundUsers.getNickName(), foundUsers.getEmail());
     }
 
     public UserResponse signin(UserDTO userDTO) {
-        User signinUser = userRepository.findByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword())
+        Users signinUsers = userRepository.findByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword())
                 .orElseThrow(() -> new IllegalArgumentException("로그인 정보가 틀렸습니다"));
-        return UserResponse.of(signinUser.getUserID(), signinUser.getNickName(), signinUser.getEmail());
+        return UserResponse.of(signinUsers.getUserID(), signinUsers.getNickName(), signinUsers.getEmail());
     }
 
     public UserResponse update(UserDTO userDTO) {
-        User getUser = getUser(userDTO.getUserId());
+        Users getUsers = getUser(userDTO.getUserId());
         validateDuplicateUser(userDTO);
-        getUser.updateUser(userDTO.getNickname(), userDTO.getEmail());
-        User savedUser = userRepository.save(getUser);
-        return UserResponse.of(savedUser.getUserID(), savedUser.getNickName(), savedUser.getEmail());
+        getUsers.updateUser(userDTO.getNickname(), userDTO.getEmail());
+        Users savedUsers = userRepository.save(getUsers);
+        return UserResponse.of(savedUsers.getUserID(), savedUsers.getNickName(), savedUsers.getEmail());
     }
 }

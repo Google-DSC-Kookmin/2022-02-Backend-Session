@@ -1,8 +1,8 @@
 package com.gdsc.homework.service;
 
-import com.gdsc.homework.domain.article.Article;
-import com.gdsc.homework.domain.likeArtlcle.LikeArticle;
-import com.gdsc.homework.domain.user.User;
+import com.gdsc.homework.domain.article.Articles;
+import com.gdsc.homework.domain.likeArtlcle.Likes;
+import com.gdsc.homework.domain.user.Users;
 import com.gdsc.homework.domain.article.ArticleRepository;
 import com.gdsc.homework.domain.likeArtlcle.LikeArticleRepository;
 import com.gdsc.homework.service.dto.request.LikeArticleDTO;
@@ -21,19 +21,19 @@ public class LikeArticleService {
     private final ArticleService articleService;
 
     public LikeArticleResponse like(LikeArticleDTO likeArticleDTO) {
-        User getUser = userService.getUser(likeArticleDTO.getUserId());
-        Article getArticle = articleService.getArtcle(likeArticleDTO.getArticleId());
-        if(likeArticleRepository.findByUserAndArticle(getUser, getArticle) != null){
-            LikeArticle getLikeArticle = likeArticleRepository.findByUserAndArticle(getUser, getArticle);
+        Users getUsers = userService.getUser(likeArticleDTO.getUserId());
+        Articles getArticles = articleService.getArtcle(likeArticleDTO.getArticleId());
+        if(likeArticleRepository.findByUsersAndArticles(getUsers, getArticles) != null){
+            Likes getLikes = likeArticleRepository.findByUsersAndArticles(getUsers, getArticles);
             log.info("좋아요 취소");
-            getArticle.unLike();
-            articleRepository.save(getArticle);
-            likeArticleRepository.delete(getLikeArticle);
-            return LikeArticleResponse.of(getLikeArticle.getLikeID(), getArticle.getArticleId(),getUser.getUserID(),getArticle.getLikeCount());
+            getArticles.unLike();
+            articleRepository.save(getArticles);
+            likeArticleRepository.delete(getLikes);
+            return LikeArticleResponse.of(getLikes.getLikeID(), getArticles.getArticleId(), getUsers.getUserID(), getArticles.getLikeCount());
         }
-        LikeArticle savedLikeArticle = likeArticleRepository.save(LikeArticle.newInstance(getArticle, getUser));
-        getArticle.like();
-        articleRepository.save(getArticle);
-        return LikeArticleResponse.of(savedLikeArticle.getLikeID(), getArticle.getArticleId(),getUser.getUserID(),getArticle.getLikeCount());
+        Likes savedLikes = likeArticleRepository.save(Likes.newInstance(getArticles, getUsers));
+        getArticles.like();
+        articleRepository.save(getArticles);
+        return LikeArticleResponse.of(savedLikes.getLikeID(), getArticles.getArticleId(), getUsers.getUserID(), getArticles.getLikeCount());
     }
 }

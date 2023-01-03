@@ -1,8 +1,8 @@
 package com.gdsc.homework.service;
 
-import com.gdsc.homework.domain.article.Article;
-import com.gdsc.homework.domain.comment.Comment;
-import com.gdsc.homework.domain.user.User;
+import com.gdsc.homework.domain.article.Articles;
+import com.gdsc.homework.domain.comment.Comments;
+import com.gdsc.homework.domain.user.Users;
 import com.gdsc.homework.domain.comment.CommentRepository;
 import com.gdsc.homework.service.dto.request.CommentDTO;
 import com.gdsc.homework.service.dto.response.CommentResponse;
@@ -18,19 +18,19 @@ public class CommentService {
     private final UserService userService;
     private final ArticleService articleService;
     public CommentResponse save(CommentDTO commentDTO) {
-        User getUser = userService.getUser(commentDTO.getUserId());
-        Article getArticle = articleService.getArtcle(commentDTO.getArticleId());
-        Comment savedCommnet =commentRepository.save(Comment.newInstance(commentDTO.getContent(), getUser, getArticle));
-        return CommentResponse.of(savedCommnet.getCommentId(), savedCommnet.getUser().getUserID(), savedCommnet.getArticle().getArticleId(), savedCommnet.getContent());
+        Users getUsers = userService.getUser(commentDTO.getUserId());
+        Articles getArticles = articleService.getArtcle(commentDTO.getArticleId());
+        Comments savedCommnet =commentRepository.save(Comments.newInstance(commentDTO.getContent(), getUsers, getArticles));
+        return CommentResponse.of(savedCommnet.getCommentId(), savedCommnet.getUsers().getUserID(), savedCommnet.getArticles().getArticleId(), savedCommnet.getContent());
     }
 
     public void delete(Long commentId) {
-        Comment foundComment = getComment(commentId);
-        commentRepository.delete(foundComment);
+        Comments foundComments = getComment(commentId);
+        commentRepository.delete(foundComments);
     }
-    private Comment getComment(Long commentId){
-        Comment foundComment = commentRepository.findByCommentId(commentId)
+    private Comments getComment(Long commentId){
+        Comments foundComments = commentRepository.findByCommentId(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 댓글입니다"));
-        return foundComment;
+        return foundComments;
     }
 }

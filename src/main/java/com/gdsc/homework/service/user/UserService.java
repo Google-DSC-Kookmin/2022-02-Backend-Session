@@ -17,7 +17,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserValidation userValidation;
 
-    public final Long enroll(UserServiceRequest userServiceRequest) {
+    public final Long enroll(final UserServiceRequest userServiceRequest) {
         userValidation.duplicateEmail(userServiceRequest.getEmail());
         userValidation.duplicateNickname(userServiceRequest.getNickname());
         User saveUser = userRepository.save(User.newInstance(
@@ -29,7 +29,7 @@ public class UserService {
         return saveUser.getId();
     }
 
-    public final void editInfo(UserInfoServiceRequest userInfoServiceRequest) {
+    public final void editInfo(final UserInfoServiceRequest userInfoServiceRequest) {
         userValidation.duplicateEmail(userInfoServiceRequest.getModifyEmail());
         userValidation.duplicateNickname(userInfoServiceRequest.getNickname());
         User saveUser = userRepository.findByEmail(userInfoServiceRequest.getOriginalEmail()).get();
@@ -38,12 +38,12 @@ public class UserService {
 
     }
 
-    public final UserServiceResponse findById(Long id) {
-        Optional<User> user = userRepository.findById(id);
+    public final UserServiceResponse findById(final Long id) {
+        User user = userRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("No User"));
         return UserServiceResponse.of(
-                user.get().getId(),
-                user.get().getEmail(),
-                user.get().getNickname()
+                user.getId(),
+                user.getEmail(),
+                user.getNickname()
         );
     }
 }

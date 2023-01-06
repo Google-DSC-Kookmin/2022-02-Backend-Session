@@ -1,7 +1,7 @@
 package com.gdsc.homework.controller.comment;
 
 import com.gdsc.homework.controller.comment.dto.request.CommentRequest;
-import com.gdsc.homework.jwt.JwtTokenProvider;
+import com.gdsc.homework.auth.jwt.JwtTokenProvider;
 import com.gdsc.homework.service.comment.CommentService;
 import com.gdsc.homework.service.comment.dto.request.CommentServiceRequest;
 import com.gdsc.homework.service.comment.dto.request.DeleteCommentServiceRequest;

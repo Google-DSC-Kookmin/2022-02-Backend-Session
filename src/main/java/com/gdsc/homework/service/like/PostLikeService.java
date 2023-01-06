@@ -20,28 +20,22 @@ public class PostLikeService {
     private final PostLikeRepository postLikeRepository;
     private final PostValidation postValidation;
 
-    public final Long addLike(PostLikeServiceRequest postLikeServiceRequest) {
+    public final Long addLike(final PostLikeServiceRequest postLikeServiceRequest) {
         postValidation.userHasPost(postLikeServiceRequest.getEmail(), postLikeServiceRequest.getPostId());
-        Post post = postRepository.findById(postLikeServiceRequest.getPostId()).get();
-        User user = userRepository.findByEmail(postLikeServiceRequest.getEmail()).get();
+        final Post post = postRepository.findById(postLikeServiceRequest.getPostId()).get();
+        final User user = userRepository.findByEmail(postLikeServiceRequest.getEmail()).get();
         presentPostLike(user, post);
-        PostLike postLike = postLikeRepository.save(
+        return postLikeRepository.save(
                 PostLike.newInstance(user,post)
-        );
-        return postLike.getId();
+        ).getId();
     }
 
-    public final void deleteLike(DeletePostLikeServiceRequest deletePostLikeServiceRequest) {
-        validatePostLike(deletePostLikeServiceRequest.getPostLikeId());
-        PostLike postLike = postLikeRepository.findById(deletePostLikeServiceRequest.getPostLikeId()).get();
+    public final void deleteLike(final DeletePostLikeServiceRequest deletePostLikeServiceRequest) {
+        PostLike postLike = postLikeRepository.findById(deletePostLikeServiceRequest.getPostLikeId()).orElseThrow(
+                () -> new IllegalArgumentException("postlike id가 존재하지 않음")
+        );
         validatePostLikeWithUser(deletePostLikeServiceRequest.getEmail(), postLike);
         postLikeRepository.deleteById(deletePostLikeServiceRequest.getPostLikeId());
-    }
-    // postlike 서비스 한 부분에서만 사용할 것 같기 때문에 따로 valid한지 구현하지 않음
-    private void validatePostLike(Long postLikeId) {
-        if(postLikeRepository.findById(postLikeId).isEmpty()){
-            throw new IllegalArgumentException("postlike id가 존재하지 않음");
-        }
     }
 
     private void presentPostLike(User user, Post post) {

@@ -19,9 +19,9 @@ public class PostLikeController {
     private final JwtTokenProvider jwtTokenProvider = JwtTokenProvider.newInstance();
 
     @PostMapping(value = "/post/{postId}/like")
-    public final Long like(@PathVariable("postId") Long postId, HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        String email = jwtTokenProvider.generateTokenToEmail(token);
+    public final Long like(@PathVariable("postId") final Long postId, final HttpServletRequest httpServletRequest) {
+        final String token = httpServletRequest.getHeader("Authorization");
+        final String email = jwtTokenProvider.generateTokenToEmail(token);
 
         return postLikeService.addLike(PostLikeServiceRequest.newInstance(
            email, postId
@@ -29,9 +29,9 @@ public class PostLikeController {
     }
 
     @DeleteMapping(value = "/postlike/{postLikeId}")
-    public final String unlike(@PathVariable("postLikeId") Long postLikeId, HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        String email = jwtTokenProvider.generateTokenToEmail(token);
+    public final String unlike(@PathVariable("postLikeId") final Long postLikeId, final HttpServletRequest httpServletRequest) {
+        final String token = httpServletRequest.getHeader("Authorization");
+        final String email = jwtTokenProvider.generateTokenToEmail(token);
         postLikeService.deleteLike(DeletePostLikeServiceRequest.newInstance(
                 email, postLikeId
         ));

@@ -32,7 +32,7 @@ public class CommentService {
         )).getId();
     }
 
-    public final void deleteComment(DeleteCommentServiceRequest deleteCommentServiceRequest) {
+    public final void deleteComment(final DeleteCommentServiceRequest deleteCommentServiceRequest) {
         Comment comment = commentRepository.findById(deleteCommentServiceRequest.getCommentId()).orElseThrow(
                 ()->new IllegalArgumentException("Comment Id가 존재하지 않음")
         );
@@ -40,7 +40,7 @@ public class CommentService {
         commentRepository.deleteById(deleteCommentServiceRequest.getCommentId());
     }
 
-    private void validateCommentWithUser(String email, Comment comment) {
+    private void validateCommentWithUser(final String email, final Comment comment) {
         if(!comment.getUser().getEmail().equals(email)) {
             throw new IllegalArgumentException("해당 유저가 댓글을 단 것이 아닙니다.");
         }

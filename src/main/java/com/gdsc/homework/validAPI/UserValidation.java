@@ -26,19 +26,15 @@ public class UserValidation {
     }
 
     public boolean presentUserEmail (String email) {
-        if(userRepository.findByEmail(email).isEmpty()) {
-            throw new IllegalArgumentException("존재하지 않는 이메일입니다.");
-        };
+        userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일입니다."));
         return true;
     }
 
     public boolean isCorrectPassword(String email, String password) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if(user.isEmpty()) {
-            throw new IllegalArgumentException("존재하지 않는 이메일입니다.");
-        }
+        User user = userRepository.findByEmail(email).orElseThrow(()->new IllegalArgumentException("존재하지 않는 이메일입니다."));
 
-        if(!user.get().getPassword().equals(password)) {
+
+        if(!user.getPassword().equals(password)) {
             throw new IllegalArgumentException("이메일 혹은 비밀번호가 맞지 않습니다.");
         }
 

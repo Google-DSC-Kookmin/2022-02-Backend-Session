@@ -20,10 +20,10 @@ public class CommentService {
     private final PostRepository postRepository;
     private final PostValidation postValidation;
 
-    public final Long addComment(CommentServiceRequest commentServiceRequest) {
+    public final Long addComment(final CommentServiceRequest commentServiceRequest) {
         postValidation.presentPost(commentServiceRequest.getPostId());
-        User user = userRepository.findByEmail(commentServiceRequest.getEmail()).get();
-        Post post = postRepository.findById(commentServiceRequest.getPostId()).get();
+        final User user = userRepository.findByEmail(commentServiceRequest.getEmail()).get();
+        final Post post = postRepository.findById(commentServiceRequest.getPostId()).get();
 
         return commentRepository.save(Comment.newInstance(
                 commentServiceRequest.getContent(),
@@ -33,16 +33,11 @@ public class CommentService {
     }
 
     public final void deleteComment(DeleteCommentServiceRequest deleteCommentServiceRequest) {
-        validateComment(deleteCommentServiceRequest.getCommentId());
-        Comment comment = commentRepository.findById(deleteCommentServiceRequest.getCommentId()).get();
+        Comment comment = commentRepository.findById(deleteCommentServiceRequest.getCommentId()).orElseThrow(
+                ()->new IllegalArgumentException("Comment Id가 존재하지 않음")
+        );
         validateCommentWithUser(deleteCommentServiceRequest.getEmail(), comment);
         commentRepository.deleteById(deleteCommentServiceRequest.getCommentId());
-    }
-
-    private void validateComment(Long commentId) {
-        if(commentRepository.findById(commentId).isEmpty()) {
-            throw new IllegalArgumentException("Comment Id가 존재하지 않음");
-        }
     }
 
     private void validateCommentWithUser(String email, Comment comment) {

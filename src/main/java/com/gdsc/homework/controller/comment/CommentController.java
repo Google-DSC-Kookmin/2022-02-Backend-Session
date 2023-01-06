@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,18 +20,18 @@ public class CommentController {
     private final CommentService commentService;
     private final JwtTokenProvider jwtTokenProvider = JwtTokenProvider.newInstance();
     @PostMapping(value = "/post/{postId}/comment")
-    public final Long addComment(@PathVariable("postId") Long postId, CommentRequest commentRequest, HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        String email = jwtTokenProvider.generateTokenToEmail(token);
+    public final Long addComment(@PathVariable("postId") final Long postId, @Valid final CommentRequest commentRequest, final HttpServletRequest httpServletRequest) {
+        final String token = httpServletRequest.getHeader("Authorization");
+        final String email = jwtTokenProvider.generateTokenToEmail(token);
         return commentService.addComment(
                 CommentServiceRequest.newInstance(email, postId, commentRequest.getContent())
         );
     }
 
     @DeleteMapping(value = "/comment/{commentId}")
-    public final String deleteComment(@PathVariable("commentId") Long commentId, HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        String email = jwtTokenProvider.generateTokenToEmail(token);
+    public final String deleteComment(@PathVariable("commentId") final Long commentId, final HttpServletRequest httpServletRequest) {
+        final String token = httpServletRequest.getHeader("Authorization");
+        final String email = jwtTokenProvider.generateTokenToEmail(token);
         commentService.deleteComment(DeleteCommentServiceRequest.newInstance(email, commentId));
         return "SUCCESS - Delete Comment";
     }

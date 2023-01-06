@@ -30,11 +30,10 @@ public class UserService {
     }
 
     public final void editInfo(UserInfoServiceRequest userInfoServiceRequest) {
-        userValidation.duplicateEmail(userInfoServiceRequest.getEmail());
+        userValidation.duplicateEmail(userInfoServiceRequest.getModifyEmail());
         userValidation.duplicateNickname(userInfoServiceRequest.getNickname());
-        User saveUser = userRepository.findByEmail(userInfoServiceRequest.getEmail()).get();
-        saveUser.setEmail(userInfoServiceRequest.getEmail());
-        saveUser.setNickname(userInfoServiceRequest.getNickname());
+        User saveUser = userRepository.findByEmail(userInfoServiceRequest.getOriginalEmail()).get();
+        saveUser.changeEmailAndNickname(userInfoServiceRequest.getModifyEmail(), userInfoServiceRequest.getNickname());
         userRepository.save(saveUser);
 
     }

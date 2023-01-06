@@ -9,10 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserInfoServiceRequest {
-    private String email;
+    private String originalEmail;
+    private String modifyEmail;
     private String nickname;
 
-    public static UserInfoServiceRequest newInstance(String email, String nickname) {
-        return new UserInfoServiceRequest(email, nickname);
+    public static UserInfoServiceRequest newInstance(String originalEmail, String modifyEmail, String nickname) {
+        return new UserInfoServiceRequest(originalEmail,modifyEmail, nickname);
     }
 }

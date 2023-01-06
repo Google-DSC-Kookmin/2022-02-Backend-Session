@@ -4,7 +4,7 @@ import com.gdsc.homework.controller.user.dto.request.ChangeUserInfoRequest;
 import com.gdsc.homework.controller.user.dto.request.LoginUserRequest;
 import com.gdsc.homework.controller.user.dto.request.UserRequest;
 import com.gdsc.homework.controller.user.dto.response.UserResponse;
-import com.gdsc.homework.jwt.JwtTokenProvider;
+import com.gdsc.homework.auth.jwt.JwtTokenProvider;
 import com.gdsc.homework.service.user.UserService;
 import com.gdsc.homework.service.user.dto.response.UserServiceResponse;
 import com.gdsc.homework.validAPI.UserValidation;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
+@RequestMapping(value="/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -34,7 +35,7 @@ public class UserController {
         return userId;
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public final UserResponse findById(@PathVariable Long id) {
         logger.info("Search User {}", id);
         UserServiceResponse userServiceResponse = userService.findById(id);
@@ -51,11 +52,13 @@ public class UserController {
         userValidation.isCorrectPassword(loginUserRequest.getEmail(), loginUserRequest.getPassword());
         return jwtTokenProvider.createJwt(loginUserRequest.getEmail());
     }
-    @PatchMapping(value = "/user/change", consumes = "application/json")
+    @PatchMapping(value = "/edit", consumes = "application/json")
     public final String modifyNickName(@RequestBody ChangeUserInfoRequest changeUserInfoRequest, HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
         String email = jwtTokenProvider.generateTokenToEmail(token);
+        logger.info("User Edit info");
         userService.editInfo(ChangeUserInfoRequest.toServiceDto(
+                email,
                 changeUserInfoRequest.getEmail(),
                 changeUserInfoRequest.getNickname()
         ));

@@ -39,11 +39,8 @@ public class User{
         return new User(email, nickname, password);
     }
 
-    public void setEmail(String email) {
+    public void changeEmailAndNickname(String email, String nickname) {
         this.email = email;
-    }
-
-    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 }

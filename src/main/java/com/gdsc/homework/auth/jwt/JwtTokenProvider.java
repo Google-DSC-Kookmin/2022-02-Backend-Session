@@ -1,4 +1,4 @@
-package com.gdsc.homework.jwt;
+package com.gdsc.homework.auth.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

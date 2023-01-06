@@ -12,7 +12,7 @@ public class ChangeUserInfoRequest {
     private String email;
     private String nickname;
 
-    public static UserInfoServiceRequest toServiceDto(String email, String nickname) {
-        return UserInfoServiceRequest.newInstance(email,nickname);
+    public static UserInfoServiceRequest toServiceDto(String originalEmail, String modifyEmail, String nickname) {
+        return UserInfoServiceRequest.newInstance(originalEmail, modifyEmail,nickname);
     }
 }

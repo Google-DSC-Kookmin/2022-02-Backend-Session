@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value="/user")
@@ -25,7 +26,7 @@ public class UserController {
     private final UserValidation userValidation;
 
     @PostMapping(value = "/signUp", consumes = "application/json")
-    public final Long signUp(@RequestBody final UserRequest userRequest) {
+    public final Long signUp(@RequestBody @Valid final UserRequest userRequest) {
         Long userId = userService.enroll(UserRequest.toServiceDto(
                 userRequest.getEmail(),
                 userRequest.getNickname(),
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public final UserResponse findById(@PathVariable final Long id) {
+    public final UserResponse findById(@PathVariable @Valid final Long id) {
         logger.info("Search User {}", id);
         UserServiceResponse userServiceResponse = userService.findById(id);
         return UserResponse.newInstance(
@@ -47,13 +48,13 @@ public class UserController {
     }
 
     @PostMapping(value = "/login", consumes = "application/json")
-    public final String login(@RequestBody final LoginUserRequest loginUserRequest) {
+    public final String login(@RequestBody @Valid final LoginUserRequest loginUserRequest) {
         userValidation.presentUserEmail(loginUserRequest.getEmail());
         userValidation.isCorrectPassword(loginUserRequest.getEmail(), loginUserRequest.getPassword());
         return jwtTokenProvider.createJwt(loginUserRequest.getEmail());
     }
     @PatchMapping(value = "/edit", consumes = "application/json")
-    public final String modifyNickName(@RequestBody final ChangeUserInfoRequest changeUserInfoRequest, final HttpServletRequest httpServletRequest) {
+    public final String modifyNickName(@RequestBody @Valid final ChangeUserInfoRequest changeUserInfoRequest, final HttpServletRequest httpServletRequest) {
         final String token = httpServletRequest.getHeader("Authorization");
         final String email = jwtTokenProvider.generateTokenToEmail(token);
         logger.info("User Edit info");

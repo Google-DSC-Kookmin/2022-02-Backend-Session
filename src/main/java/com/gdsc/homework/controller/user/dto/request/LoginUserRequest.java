@@ -13,10 +13,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 public class LoginUserRequest {
-    @NotNull
     @Email
     private String email;
 
-    @NotNull
+    @NotBlank
     private String password;
 }

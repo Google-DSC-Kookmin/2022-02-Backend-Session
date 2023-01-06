@@ -16,7 +16,6 @@ public class ChangeUserInfoRequest {
     @Email
     private String email;
 
-    @NotNull
     @NotBlank
     private String nickname;
 

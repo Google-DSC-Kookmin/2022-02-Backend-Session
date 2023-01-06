@@ -3,7 +3,7 @@ package com.gdsc.homework.controller.post;
 import com.gdsc.homework.controller.post.dto.request.PostModifyRequest;
 import com.gdsc.homework.controller.post.dto.request.PostRequest;
 import com.gdsc.homework.controller.post.dto.response.PostResponse;
-import com.gdsc.homework.jwt.JwtTokenProvider;
+import com.gdsc.homework.auth.jwt.JwtTokenProvider;
 import com.gdsc.homework.service.post.PostService;
 import com.gdsc.homework.service.post.dto.request.DeletePostServiceRequest;
 import com.gdsc.homework.service.post.dto.response.PostServiceResponse;
@@ -13,20 +13,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping(value = "/post")
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final JwtTokenProvider jwtTokenProvider = JwtTokenProvider.newInstance();
 
-    @PostMapping(value = "/post", consumes = "application/json")
-    public final Long upload(@RequestBody PostRequest postRequest, HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        String email = jwtTokenProvider.generateTokenToEmail(token);
+    @PostMapping(consumes = "application/json")
+    public final Long upload(@RequestBody @Valid final PostRequest postRequest, final HttpServletRequest httpServletRequest) {
+        final String token = httpServletRequest.getHeader("Authorization");
+        final String email = jwtTokenProvider.generateTokenToEmail(token);
 
         return postService.uploadPost(PostRequest.toServiceDto(
                 email,
@@ -35,10 +37,10 @@ public class PostController {
         ));
     }
 
-    @PatchMapping(value = "/post", consumes = "application/json")
-    public final String modifyPost(@RequestBody PostModifyRequest postModifyRequest, HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        String email = jwtTokenProvider.generateTokenToEmail(token);
+    @PatchMapping(consumes = "application/json")
+    public final String modifyPost(@RequestBody @Valid final PostModifyRequest postModifyRequest, final HttpServletRequest httpServletRequest) {
+        final String token = httpServletRequest.getHeader("Authorization");
+        final String email = jwtTokenProvider.generateTokenToEmail(token);
         postService.modifyPost(PostModifyRequest.toServiceDto(
                 email,
                 postModifyRequest.getId(),
@@ -48,10 +50,8 @@ public class PostController {
         return "Success";
     }
 
-    @GetMapping(value = "/post/{id}")
-    public final PostResponse findById(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        jwtTokenProvider.validateJwt(token);
+    @GetMapping(value = "/{id}")
+    public final PostResponse findById(@PathVariable("id") final Long id) {
         logger.info("Get Post {}", id);
         PostServiceResponse postServiceResponse = postService.findById(id);
         return PostResponse.newInstance(
@@ -61,47 +61,42 @@ public class PostController {
         );
     }
 
-    @GetMapping(value = "/post-all")
-    public final List<PostResponse> getAll(@RequestParam(value = "order",required = false, defaultValue = "new") String order, HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        jwtTokenProvider.validateJwt(token);
+    @GetMapping(value = "/all")
+    public final List<PostResponse> getAll(@RequestParam(value = "order",required = false, defaultValue = "new") final String order) {
         if(!order.equals("new") && !order.equals("like")) {
             throw new IllegalArgumentException("올바른 파라미터 필요");
         }
-        List<PostResponse> postResponses = new ArrayList<PostResponse>();
-        postService.getAllPost(order).forEach(
-                post -> {postResponses.add(PostResponse.newInstance(
+
+        return postService.getAllPost(order)
+                .stream()
+                .map(post -> PostResponse.newInstance(
                         post.getId(),
                         post.getTitle(),
                         post.getContent()
-                ));}
-        );
-        return postResponses;
+                )).collect(Collectors.toList());
     }
 
-    @GetMapping(value = "/mypost")
-    public final List<PostResponse> getMyPosts(@RequestParam(value = "order", required = false, defaultValue = "new") String order, HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        String email = jwtTokenProvider.generateTokenToEmail(token);
+    @GetMapping(value = "/my-post")
+    public final List<PostResponse> getMyPosts(@RequestParam(value = "order", required = false, defaultValue = "new") final String order, final HttpServletRequest httpServletRequest) {
+        final String token = httpServletRequest.getHeader("Authorization");
+        final String email = jwtTokenProvider.generateTokenToEmail(token);
         if(!order.equals("new") && !order.equals("like")) {
             throw new IllegalArgumentException("올바른 파라미터 필요");
         }
         logger.info("회원의 post 불러오기");
-        List<PostResponse> postResponses = new ArrayList<PostResponse>();
-        postService.getMyPosts(order, email).forEach(
-                post -> {postResponses.add(PostResponse.newInstance(
+        return postService.getMyPosts(order, email)
+                .stream()
+                .map(post -> PostResponse.newInstance(
                         post.getId(),
                         post.getTitle(),
                         post.getContent()
-                ));}
-        );
-        return postResponses;
+                )).collect(Collectors.toList());
     }
 
     @DeleteMapping(value = "/post/{postId}")
-    public final String deletePost (@PathVariable("postId") Long postId, HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        String email = jwtTokenProvider.generateTokenToEmail(token);
+    public final String deletePost (@PathVariable("postId") final Long postId, final HttpServletRequest httpServletRequest) {
+        final String token = httpServletRequest.getHeader("Authorization");
+        final String email = jwtTokenProvider.generateTokenToEmail(token);
         postService.deletePost(DeletePostServiceRequest.newInstance(email, postId));
         return "SUCCESS - POST Delete";
     }

@@ -13,9 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,77 +23,92 @@ public class PostService {
     private final UserRepository userRepository;
     private final PostValidation postValidation;
 
-    public final Long uploadPost(PostServiceRequest postServiceRequest) {
-        Optional<User> auther = userRepository.findByEmail(postServiceRequest.getEmail());
-        Post savePost = postRepository.save(Post.newInstance(
+    public final Long uploadPost(final PostServiceRequest postServiceRequest) {
+        final User auther = userRepository.findByEmail(postServiceRequest.getEmail()).orElseThrow(
+                ()-> new IllegalArgumentException("유저가 없습니다.")
+        );
+        return postRepository.save(Post.newInstance(
                 postServiceRequest.getTitle(),
                 postServiceRequest.getContent(),
-                auther.get()
-        ));
-        return savePost.getId();
+                auther
+        )).getId();
     }
 
-    public final void modifyPost(PostServiceModifyRequest postServiceModifyRequest) {
-        Optional <Post> NullablePost = postRepository.findById(postServiceModifyRequest.getId());
-        postValidation.userHasPost(postServiceModifyRequest.getEmail(), NullablePost);
+    public final void modifyPost(final PostServiceModifyRequest postServiceModifyRequest) {
+        Post post = postRepository.findById(postServiceModifyRequest.getId()).orElseThrow(
+                () -> new IllegalArgumentException("포스트가 존재하지 않습니다."));
+        postValidation.userHasPost(postServiceModifyRequest.getEmail(), post);
 
-        Post post = NullablePost.get();
-        post.setTitle(postServiceModifyRequest.getTitle());
-        post.setContent(postServiceModifyRequest.getContent());
+        post.editTitleAndContent(postServiceModifyRequest.getTitle(), postServiceModifyRequest.getContent());
         postRepository.save(post);
     }
 
-    public final List<PostServiceResponse> getAllPost(String order) {
-
-        String orderProperty = null;
+    public final List<PostServiceResponse> getAllPost(final String order) {
         if(order.equals("new")) {
-            orderProperty = "id";
-        } else if (order.equals("like")) {
-            orderProperty = "totalPostLikes";
+            return findByCreatedAt();
         }
-        List<Post> posts = postRepository.findAll(Sort.by(Sort.Direction.DESC,orderProperty));
-        List<PostServiceResponse> postServiceResponses = new ArrayList<PostServiceResponse>();
-        posts.forEach(post -> {postServiceResponses.add(PostServiceResponse.of(
-                post.getId(),
-                post.getTitle(),
-                post.getContent()
-            ));
-        });
-
-        return postServiceResponses;
+        return findByLike();
     }
 
-    public final List<PostServiceResponse> getMyPosts(String order, String email) {
-        String orderProperty = null;
-        if(order.equals("new")) {
-            orderProperty = "id";
-        } else if (order.equals("like")) {
-            orderProperty = "totalPostLikes";
-        }
-        User user = userRepository.findByEmail(email).get();
-        List<Post> posts = postRepository.findByAuther(user);
-        List<PostServiceResponse> postServiceResponses = new ArrayList<PostServiceResponse>();
-        posts.forEach(post -> {postServiceResponses.add(PostServiceResponse.of(
-                post.getId(),
-                post.getTitle(),
-                post.getContent()
-            ));
-        });
+    public final List<PostServiceResponse> getMyPosts(final String order, final String email) {
+        final User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("유저 없음"));
 
-        return postServiceResponses;
+        if(order.equals("new")) {
+            return findByCreatedAt(user);
+        }
+        return findByLike(user);
     }
 
-    public final void deletePost(DeletePostServiceRequest deletePostServiceRequest) {
+    public final void deletePost(final DeletePostServiceRequest deletePostServiceRequest) {
         postValidation.userHasPost(deletePostServiceRequest.getEmail(), deletePostServiceRequest.getPostId());
         postRepository.deleteById(deletePostServiceRequest.getPostId());
     }
 
-    public final PostServiceResponse findById(Long id) {
-        Optional<Post> post = postRepository.findById(id);
+    public final PostServiceResponse findById(final Long id) {
+        final Post post = postRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 포스트입니다."));
         return PostServiceResponse.of(
-                post.get().getId(),
-                post.get().getTitle(),
-                post.get().getContent()
+                post.getId(),
+                post.getTitle(),
+                post.getContent()
         );
+    }
+
+    private List<PostServiceResponse> findByCreatedAt(final User user) {
+        return postRepository.findByAuther(user, Sort.by(Sort.Direction.DESC,"id"))
+                .stream()
+                .map(post -> PostServiceResponse.of(
+                        post.getId(),
+                        post.getTitle(),
+                        post.getContent()
+                )).collect(Collectors.toList());
+    }
+    private List<PostServiceResponse> findByCreatedAt() {
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC,"id"))
+                .stream()
+                .map(post -> PostServiceResponse.of(
+                        post.getId(),
+                        post.getTitle(),
+                        post.getContent()
+                )).collect(Collectors.toList());
+    }
+
+    private List<PostServiceResponse> findByLike(final User user) {
+        return postRepository.findByAuther(user, Sort.by(Sort.Direction.DESC,"totalPostLikes"))
+                .stream()
+                .map(post -> PostServiceResponse.of(
+                        post.getId(),
+                        post.getTitle(),
+                        post.getContent()
+                )).collect(Collectors.toList());
+    }
+
+    private List<PostServiceResponse> findByLike() {
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC,"totalPostLikes"))
+                .stream()
+                .map(post -> PostServiceResponse.of(
+                        post.getId(),
+                        post.getTitle(),
+                        post.getContent()
+                )).collect(Collectors.toList());
     }
 }

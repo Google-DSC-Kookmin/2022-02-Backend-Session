@@ -14,6 +14,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByAuther(User auther);
 
+    List<Post> findByAuther(User auther, Sort sort);
+
     @Override
     List<Post> findAll(Sort sort);
 

@@ -1,6 +1,6 @@
 package com.gdsc.homework.controller.like;
 
-import com.gdsc.homework.jwt.JwtTokenProvider;
+import com.gdsc.homework.auth.jwt.JwtTokenProvider;
 import com.gdsc.homework.service.like.PostLikeService;
 import com.gdsc.homework.service.like.dto.request.DeletePostLikeServiceRequest;
 import com.gdsc.homework.service.like.dto.request.PostLikeServiceRequest;

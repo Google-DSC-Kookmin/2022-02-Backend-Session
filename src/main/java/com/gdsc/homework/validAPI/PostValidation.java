@@ -12,9 +12,7 @@ import java.util.Optional;
 public class PostValidation {
     private final PostRepository postRepository;
 
-    public void userHasPost(String email, Optional<Post> NullablePost) {
-        presentPost(NullablePost);
-        Post post = NullablePost.get();
+    public void userHasPost(String email, Post post) {
         validateUserWithPost(post, email);
     }
 

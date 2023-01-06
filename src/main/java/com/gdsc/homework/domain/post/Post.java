@@ -3,8 +3,6 @@ package com.gdsc.homework.domain.post;
 import com.gdsc.homework.domain.comment.Comment;
 import com.gdsc.homework.domain.like.PostLike;
 import com.gdsc.homework.domain.user.User;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
@@ -44,14 +42,9 @@ public class Post {
         return new Post(title, content, auther);
     }
 
-    public void setTitle(String title) {
+    public void editTitleAndContent(String title, String content) {
         this.title = title;
-    }
-    public void setContent(String content) {
         this.content = content;
     }
-
-//    @OneToMany(mappedBy = "postlike")
-//    private List<PostLike> postLikes = new ArrayList<PostLike>();
 
 }

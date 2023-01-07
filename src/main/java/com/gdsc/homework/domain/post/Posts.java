@@ -1,7 +1,7 @@
 package com.gdsc.homework.domain.post;
 
-import com.gdsc.homework.domain.comment.Comment;
-import com.gdsc.homework.domain.like.PostLike;
+import com.gdsc.homework.domain.comment.Comments;
+import com.gdsc.homework.domain.like.PostLikes;
 import com.gdsc.homework.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Post{
+@Table(name = "POSTS")
+public class Posts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,22 +25,22 @@ public class Post{
     @JoinColumn(name = "auther_id")
     private User auther;
 
-    @OneToMany(mappedBy = "post", orphanRemoval = true)
-    private List<PostLike> postLikes = new ArrayList<PostLike>();
+    @OneToMany(mappedBy = "posts", orphanRemoval = true)
+    private List<PostLikes> postLikes = new ArrayList<PostLikes>();
 
     @Formula("(SELECT count(1) FROM post_like l WHERE l.post_id = id)")
     private int totalPostLikes;
 
-    @OneToMany(mappedBy = "post", orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<Comment>();
+    @OneToMany(mappedBy = "posts", orphanRemoval = true)
+    private List<Comments> comments = new ArrayList<Comments>();
 
-    private Post(String title, String content, User auther) {
+    private Posts(String title, String content, User auther) {
         this.title = title;
         this.content = content;
         this.auther = auther;
     }
-    public static Post newInstance(String title, String content, User auther) {
-        return new Post(title, content, auther);
+    public static Posts newInstance(String title, String content, User auther) {
+        return new Posts(title, content, auther);
     }
 
     public void editTitleAndContent(String title, String content) {

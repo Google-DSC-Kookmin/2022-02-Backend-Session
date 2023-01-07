@@ -1,6 +1,6 @@
 package com.gdsc.homework.domain.like;
 
-import com.gdsc.homework.domain.post.Post;
+import com.gdsc.homework.domain.post.Posts;
 import com.gdsc.homework.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class PostLike {
+@Table(name = "POSTLIKES")
+public class PostLikes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,15 +22,15 @@ public class PostLike {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private Post post;
+    private Posts posts;
 
-    private PostLike(User user, Post post) {
+    private PostLikes(User user, Posts posts) {
         this.user = user;
-        this.post = post;
+        this.posts = posts;
     }
 
-    public static PostLike newInstance(User user, Post post) {
-        return new PostLike(user, post);
+    public static PostLikes newInstance(User user, Posts posts) {
+        return new PostLikes(user, posts);
     }
 
 

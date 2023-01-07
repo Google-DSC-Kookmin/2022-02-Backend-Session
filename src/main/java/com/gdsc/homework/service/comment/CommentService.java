@@ -1,8 +1,8 @@
 package com.gdsc.homework.service.comment;
 
-import com.gdsc.homework.domain.comment.Comment;
+import com.gdsc.homework.domain.comment.Comments;
 import com.gdsc.homework.domain.comment.CommentRepository;
-import com.gdsc.homework.domain.post.Post;
+import com.gdsc.homework.domain.post.Posts;
 import com.gdsc.homework.domain.post.PostRepository;
 import com.gdsc.homework.domain.user.User;
 import com.gdsc.homework.domain.user.UserRepository;
@@ -23,25 +23,25 @@ public class CommentService {
     public final Long addComment(final CommentServiceRequest commentServiceRequest) {
         postValidation.presentPost(commentServiceRequest.getPostId());
         final User user = userRepository.findByEmail(commentServiceRequest.getEmail()).get();
-        final Post post = postRepository.findById(commentServiceRequest.getPostId()).get();
+        final Posts posts = postRepository.findById(commentServiceRequest.getPostId()).get();
 
-        return commentRepository.save(Comment.newInstance(
+        return commentRepository.save(Comments.newInstance(
                 commentServiceRequest.getContent(),
-                post,
+                posts,
                 user
         )).getId();
     }
 
     public final void deleteComment(final DeleteCommentServiceRequest deleteCommentServiceRequest) {
-        Comment comment = commentRepository.findById(deleteCommentServiceRequest.getCommentId()).orElseThrow(
+        Comments comments = commentRepository.findById(deleteCommentServiceRequest.getCommentId()).orElseThrow(
                 ()->new IllegalArgumentException("Comment Id가 존재하지 않음")
         );
-        validateCommentWithUser(deleteCommentServiceRequest.getEmail(), comment);
+        validateCommentWithUser(deleteCommentServiceRequest.getEmail(), comments);
         commentRepository.deleteById(deleteCommentServiceRequest.getCommentId());
     }
 
-    private void validateCommentWithUser(final String email, final Comment comment) {
-        if(!comment.getUser().getEmail().equals(email)) {
+    private void validateCommentWithUser(final String email, final Comments comments) {
+        if(!comments.getUser().getEmail().equals(email)) {
             throw new IllegalArgumentException("해당 유저가 댓글을 단 것이 아닙니다.");
         }
     }

@@ -7,17 +7,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface PostRepository extends JpaRepository<Post, Long> {
-    Post save(Post post);
+public interface PostRepository extends JpaRepository<Posts, Long> {
+    Posts save(Posts posts);
 
-    Optional<Post> findById(Long id);
+    Optional<Posts> findById(Long id);
 
-    List<Post> findByAuther(User auther);
+    List<Posts> findByAuther(User auther);
 
-    List<Post> findByAuther(User auther, Sort sort);
+    List<Posts> findByAuther(User auther, Sort sort);
 
     @Override
-    List<Post> findAll(Sort sort);
+    List<Posts> findAll(Sort sort);
 
     @Override
     void deleteById(Long id);

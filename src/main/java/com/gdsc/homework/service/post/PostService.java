@@ -1,6 +1,6 @@
 package com.gdsc.homework.service.post;
 
-import com.gdsc.homework.domain.post.Post;
+import com.gdsc.homework.domain.post.Posts;
 import com.gdsc.homework.domain.post.PostRepository;
 import com.gdsc.homework.domain.user.User;
 import com.gdsc.homework.domain.user.UserRepository;
@@ -27,7 +27,7 @@ public class PostService {
         final User auther = userRepository.findByEmail(postServiceRequest.getEmail()).orElseThrow(
                 ()-> new IllegalArgumentException("유저가 없습니다.")
         );
-        return postRepository.save(Post.newInstance(
+        return postRepository.save(Posts.newInstance(
                 postServiceRequest.getTitle(),
                 postServiceRequest.getContent(),
                 auther
@@ -35,12 +35,12 @@ public class PostService {
     }
 
     public final void modifyPost(final PostServiceModifyRequest postServiceModifyRequest) {
-        Post post = postRepository.findById(postServiceModifyRequest.getId()).orElseThrow(
+        Posts posts = postRepository.findById(postServiceModifyRequest.getId()).orElseThrow(
                 () -> new IllegalArgumentException("포스트가 존재하지 않습니다."));
-        postValidation.userHasPost(postServiceModifyRequest.getEmail(), post);
+        postValidation.userHasPost(postServiceModifyRequest.getEmail(), posts);
 
-        post.editTitleAndContent(postServiceModifyRequest.getTitle(), postServiceModifyRequest.getContent());
-        postRepository.save(post);
+        posts.editTitleAndContent(postServiceModifyRequest.getTitle(), postServiceModifyRequest.getContent());
+        postRepository.save(posts);
     }
 
     public final List<PostServiceResponse> getAllPost(final String order) {
@@ -65,11 +65,11 @@ public class PostService {
     }
 
     public final PostServiceResponse findById(final Long id) {
-        final Post post = postRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 포스트입니다."));
+        final Posts posts = postRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 포스트입니다."));
         return PostServiceResponse.of(
-                post.getId(),
-                post.getTitle(),
-                post.getContent()
+                posts.getId(),
+                posts.getTitle(),
+                posts.getContent()
         );
     }
 

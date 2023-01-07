@@ -1,6 +1,6 @@
 package com.gdsc.homework.domain.comment;
 
-import com.gdsc.homework.domain.post.Post;
+import com.gdsc.homework.domain.post.Posts;
 import com.gdsc.homework.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Comment {
+@Table(name = "COMMENTS")
+public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,19 +21,19 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name="post_id")
-    private Post post;
+    private Posts posts;
 
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
-    private Comment(String content, Post post, User user) {
+    private Comments(String content, Posts posts, User user) {
         this.content = content;
-        this.post = post;
+        this.posts = posts;
         this.user = user;
     }
 
-    public static Comment newInstance(String content, Post post, User user) {
-        return new Comment(content, post, user);
+    public static Comments newInstance(String content, Posts posts, User user) {
+        return new Comments(content, posts, user);
     }
 }

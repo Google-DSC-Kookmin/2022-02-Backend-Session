@@ -1,8 +1,8 @@
 package com.gdsc.homework.service.like;
 
-import com.gdsc.homework.domain.like.PostLike;
+import com.gdsc.homework.domain.like.PostLikes;
 import com.gdsc.homework.domain.like.PostLikeRepository;
-import com.gdsc.homework.domain.post.Post;
+import com.gdsc.homework.domain.post.Posts;
 import com.gdsc.homework.domain.post.PostRepository;
 import com.gdsc.homework.domain.user.User;
 import com.gdsc.homework.domain.user.UserRepository;
@@ -22,30 +22,30 @@ public class PostLikeService {
 
     public final Long addLike(final PostLikeServiceRequest postLikeServiceRequest) {
         postValidation.userHasPost(postLikeServiceRequest.getEmail(), postLikeServiceRequest.getPostId());
-        final Post post = postRepository.findById(postLikeServiceRequest.getPostId()).get();
+        final Posts posts = postRepository.findById(postLikeServiceRequest.getPostId()).get();
         final User user = userRepository.findByEmail(postLikeServiceRequest.getEmail()).get();
-        presentPostLike(user, post);
+        presentPostLike(user, posts);
         return postLikeRepository.save(
-                PostLike.newInstance(user,post)
+                PostLikes.newInstance(user, posts)
         ).getId();
     }
 
     public final void deleteLike(final DeletePostLikeServiceRequest deletePostLikeServiceRequest) {
-        PostLike postLike = postLikeRepository.findById(deletePostLikeServiceRequest.getPostLikeId()).orElseThrow(
+        PostLikes postLikes = postLikeRepository.findById(deletePostLikeServiceRequest.getPostLikeId()).orElseThrow(
                 () -> new IllegalArgumentException("postlike id가 존재하지 않음")
         );
-        validatePostLikeWithUser(deletePostLikeServiceRequest.getEmail(), postLike);
+        validatePostLikeWithUser(deletePostLikeServiceRequest.getEmail(), postLikes);
         postLikeRepository.deleteById(deletePostLikeServiceRequest.getPostLikeId());
     }
 
-    private void presentPostLike(User user, Post post) {
-        postLikeRepository.findByUserAndPost(user, post).ifPresent(
-                postLike -> {throw new IllegalArgumentException("이미 좋아요를 눌렀습니다.");}
+    private void presentPostLike(User user, Posts posts) {
+        postLikeRepository.findByUserAndPost(user, posts).ifPresent(
+                postLikes -> {throw new IllegalArgumentException("이미 좋아요를 눌렀습니다.");}
         );
     }
 
-    private void validatePostLikeWithUser(String email, PostLike postLike) {
-        if(!postLike.getUser().getEmail().equals(email)) {
+    private void validatePostLikeWithUser(String email, PostLikes postLikes) {
+        if(!postLikes.getUser().getEmail().equals(email)) {
             throw new IllegalArgumentException("해당 유저가 좋아요(id)를 누르지 않았습니다.");
         }
     }

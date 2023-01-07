@@ -1,6 +1,6 @@
 package com.gdsc.homework.domain.user;
 
-import com.gdsc.homework.domain.post.Post;
+import com.gdsc.homework.domain.post.Posts;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "USER")
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class User{
     private String password;
 
     @OneToMany(mappedBy = "auther")
-    private List<Post> posts = new ArrayList<Post>();
+    private List<Posts> posts = new ArrayList<Posts>();
     private User(String email, String nickname, String password) {
         this.email = email;
         this.nickname = nickname;

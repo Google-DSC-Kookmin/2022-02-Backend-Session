@@ -1,0 +1,40 @@
+package com.gdsc.homework.controller.like;
+
+import com.gdsc.homework.auth.jwt.JwtTokenProvider;
+import com.gdsc.homework.service.like.PostLikeService;
+import com.gdsc.homework.service.like.dto.request.DeletePostLikeServiceRequest;
+import com.gdsc.homework.service.like.dto.request.PostLikeServiceRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+
+@RestController
+@RequiredArgsConstructor
+public class PostLikeController {
+    private final PostLikeService postLikeService;
+    private final JwtTokenProvider jwtTokenProvider = JwtTokenProvider.newInstance();
+
+    @PostMapping(value = "/post/{postId}/like")
+    public final Long like(@PathVariable("postId") final Long postId, final HttpServletRequest httpServletRequest) {
+        final String token = httpServletRequest.getHeader("Authorization");
+        final String email = jwtTokenProvider.generateTokenToEmail(token);
+
+        return postLikeService.addLike(PostLikeServiceRequest.newInstance(
+           email, postId
+        ));
+    }
+
+    @DeleteMapping(value = "/postlike/{postLikeId}")
+    public final String unlike(@PathVariable("postLikeId") final Long postLikeId, final HttpServletRequest httpServletRequest) {
+        final String token = httpServletRequest.getHeader("Authorization");
+        final String email = jwtTokenProvider.generateTokenToEmail(token);
+        postLikeService.deleteLike(DeletePostLikeServiceRequest.newInstance(
+                email, postLikeId
+        ));
+        return "SUCCESS - PostLike cancel";
+    }
+}

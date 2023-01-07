@@ -74,7 +74,7 @@ public class PostService {
     }
 
     private List<PostServiceResponse> findByCreatedAt(final User user) {
-        return postRepository.findByAuther(user, Sort.by(Sort.Direction.DESC,"id"))
+        return postRepository.findByAuther(user, Sort.by(Sort.Direction.DESC,"createAt"))
                 .stream()
                 .map(post -> PostServiceResponse.of(
                         post.getId(),
@@ -83,7 +83,7 @@ public class PostService {
                 )).collect(Collectors.toList());
     }
     private List<PostServiceResponse> findByCreatedAt() {
-        return postRepository.findAll(Sort.by(Sort.Direction.DESC,"id"))
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC,"createAt"))
                 .stream()
                 .map(post -> PostServiceResponse.of(
                         post.getId(),

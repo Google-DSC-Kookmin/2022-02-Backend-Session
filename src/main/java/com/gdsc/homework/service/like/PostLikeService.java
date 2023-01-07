@@ -39,7 +39,7 @@ public class PostLikeService {
     }
 
     private void presentPostLike(User user, Posts posts) {
-        postLikeRepository.findByUserAndPost(user, posts).ifPresent(
+        postLikeRepository.findByUserAndPosts(user, posts).ifPresent(
                 postLikes -> {throw new IllegalArgumentException("이미 좋아요를 눌렀습니다.");}
         );
     }

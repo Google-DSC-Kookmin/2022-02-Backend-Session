@@ -1,11 +1,13 @@
 package com.gdsc.homework.domain.post;
 
+import com.gdsc.homework.domain.BaseTimeEntity;
 import com.gdsc.homework.domain.comment.Comments;
 import com.gdsc.homework.domain.like.PostLikes;
 import com.gdsc.homework.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Table(name = "POSTS")
-public class Posts {
+public class Posts extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,7 +30,7 @@ public class Posts {
     @OneToMany(mappedBy = "posts", orphanRemoval = true)
     private List<PostLikes> postLikes = new ArrayList<PostLikes>();
 
-    @Formula("(SELECT count(1) FROM post_like l WHERE l.post_id = id)")
+    @Formula("(SELECT count(1) FROM postlikes l WHERE l.post_id = id)")
     private int totalPostLikes;
 
     @OneToMany(mappedBy = "posts", orphanRemoval = true)
